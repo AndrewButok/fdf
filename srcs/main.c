@@ -46,10 +46,9 @@ int 	mouse_draw(int x, int y, t_view *view)
 	end.y = y;
 	start.color.color = 0xff0000;
 	end.color.color = 0x0000ff;
-	t_line line;
-	line.start = &start;
-	line.end = &end;
-	draw_line_antialias(&line, view);
+	t_line *line = get_line(&start, &end);
+	draw_line_antialias(line, view);
+	free_line(&line);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
 }

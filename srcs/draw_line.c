@@ -17,14 +17,14 @@
 void			img_pixel_put(t_view *view, int x, int y, t_color color)
 {
 	t_color			colorb;
-	int 			*scene;
+	int				*scene;
 
 	if (view->endian == 1)
 	{
 		colorb.spectrum.alpha = color.spectrum.blue;
 		colorb.spectrum.red = color.spectrum.green;
 		colorb.spectrum.green = color.spectrum.red;
-		colorb.spectrum.blue= color.spectrum.alpha;
+		colorb.spectrum.blue = color.spectrum.alpha;
 	}
 	else
 		colorb.color = color.color;
@@ -48,7 +48,7 @@ static void		line_put(t_line *line, bool ck, double gradient, t_view *view)
 	while (1)
 	{
 		color.color = linear_gradient(line->start, line->end, ck, i++);
-		img_pixel_put(view, (ck ? (int)x :(int)round(x)),
+		img_pixel_put(view, (ck ? (int)x : (int)round(x)),
 				(ck ? (int)round(y) : (int)y),
 				color);
 		if ((ck && x >= line->end->x) || (!ck && y >= line->end->y))

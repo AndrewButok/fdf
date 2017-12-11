@@ -10,7 +10,7 @@ find_library(MLX mlx)
 set(SOURCE_FILES srcs/main.c
         srcs/draw_line.c srcs/draw_line_antialias.c
         srcs/linear_gradient.c
-        libft/get_next_line.c )
+        libft/get_next_line.c srcs/line.c)
 
 add_executable(fdf ${SOURCE_FILES})
 target_link_libraries(fdf ${LIBFT} ${OPENGL} ${APPKIT} ${MLX})
