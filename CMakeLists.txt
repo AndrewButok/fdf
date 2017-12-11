@@ -13,4 +13,4 @@ set(SOURCE_FILES srcs/main.c
 
 add_executable(fdf ${SOURCE_FILES})
 target_link_libraries(fdf ${LIBFT} ${OPENGL} ${APPKIT} ${MLX})
-include_directories(includes libft/includes )
+include_directories(includes libft/includes)
