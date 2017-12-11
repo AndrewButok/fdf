@@ -5,3 +5,5 @@
 cmake-build-debug
 ./libft/obj
 ./libft/libft.a
+./idea
+
