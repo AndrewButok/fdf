@@ -3,7 +3,7 @@
 **/.DS_Store
 **/._.DS_Store
 cmake-build-debug
-./libft/obj
-./libft/libft.a
-./idea
+libft/obj
+libft/libft.a
+.idea
 
