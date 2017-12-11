@@ -6,7 +6,7 @@
 /*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:19:00 by abutok            #+#    #+#             */
-/*   Updated: 2017/12/06 18:42:25 by abutok           ###   ########.fr       */
+/*   Updated: 2017/12/11 12:57:16 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <mlx.h>
 # include <math.h>
 # include <stdbool.h>
+# include <fcntl.h>
 # include "libft.h"
 # include "mlx_color.h"
 # include "get_next_line.h"
