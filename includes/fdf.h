@@ -6,7 +6,7 @@
 /*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:19:00 by abutok            #+#    #+#             */
-/*   Updated: 2017/12/11 12:57:16 by abutok           ###   ########.fr       */
+/*   Updated: 2017/12/05 00:02:05 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,18 @@
 # include "mlx_color.h"
 # include "get_next_line.h"
 
-void	*g_mlx;
-void	*g_win;
+typedef struct	s_view
+{
+	void 	*mlx;
+	void 	*win;
+	void 	*img;
+	char 	*scene;
+	int 	bits_per_pixel;
+	int 	endian;
+	int 	x;
+	int 	y;
+	int 	size_line;
+}				t_view;
 
 typedef struct	s_point
 {
@@ -31,11 +41,17 @@ typedef struct	s_point
 	t_color	color;
 }				t_point;
 
+typedef struct	s_line
+{
+	t_point *start;
+	t_point	*end;
+}				t_line;
+
 int				linear_gradient(t_point *start, t_point *end, bool f, int i);
-void			draw_line(t_point *start, t_point *end);
-void			draw_line_antialias(t_point *start, t_point *end);
+void			draw_line(t_line *line, t_view *view);
+void			draw_line_antialias(t_line *line, t_view *view);
+void			img_pixel_put(t_view *view, int x, int y, t_color color);
 t_point			**get_map(int fd, int *width, int *depth);
-bool			checkz(char *str);
-bool			checkcolorhex(char *str);
+bool			is_null(void *link);
 
 #endif

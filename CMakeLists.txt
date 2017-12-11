@@ -8,7 +8,8 @@ find_library(APPKIT AppKit)
 find_library(MLX mlx)
 
 set(SOURCE_FILES srcs/main.c
-        srcs/draw_line_antialias.c srcs/draw_line.c srcs/linear_gradient.c
+        srcs/draw_line.c srcs/draw_line_antialias.c
+        srcs/linear_gradient.c
         libft/get_next_line.c )
 
 add_executable(fdf ${SOURCE_FILES})

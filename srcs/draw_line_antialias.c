@@ -6,98 +6,100 @@
 /*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:26:00 by abutok            #+#    #+#             */
-/*   Updated: 2017/12/06 18:03:57 by abutok           ###   ########.fr       */
+/*   Updated: 2017/11/29 15:26:00 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <mlx_color.h>
 #include "fdf.h"
 
 static t_color	set_brightness(t_color color, double brightness)
 {
-	if (brightness == 1)
-		brightness = 0.9;
-	if (brightness == 0)
-		brightness = 0.1;
-	color.color = color.color |
-	((int)(255 * (brightness == 1 ? 0.9 : brightness)) << 24);
+	brightness = brightness == 1 ? 0.9 : brightness;
+	brightness = brightness == 0 ? 0.1 : brightness;
+	color.spectrum.red *= brightness;
+	color.spectrum.green *= brightness;
+	color.spectrum.blue *= brightness;
 	return (color);
 }
 
-static void		line_putx(t_point *start, t_point *end,
-							bool ck, double gradient)
+static void		line_putx(t_line *line, bool ck,
+		double gradient, t_view *view)
 {
 	double	x;
 	double	y;
 	int		i;
 	t_color	color;
 
-	x = (double)start->x;
-	y = (double)start->y;
+	x = (double)line->start->x;
+	y = (double)line->start->y;
 	i = 0;
-	while (x != end->x)
+	while (x <= line->end->x)
 	{
-		color.color = linear_gradient(start, end, ck, i++);
-		mlx_pixel_put(g_mlx, g_win, (int)round(x),
-		(int)floor(y), set_brightness(color, y - floor(y)).color);
-		mlx_pixel_put(g_mlx, g_win, (int)round(x),
-		(int)floor(y) + 1, set_brightness(color, 1 - y + floor(y)).color);
+		color.color = linear_gradient(line->start, line->end, ck, i++);
+		img_pixel_put(view, (int)round(x), (int)floor(y),
+				set_brightness(color, 1 - (y - floor(y))));
+		img_pixel_put(view, (int)round(x), (int)floor(y) + 1,
+				set_brightness(color, y - floor(y)));
 		x++;
 		y += gradient;
 	}
-	mlx_pixel_put(g_mlx, g_win, end->x,
-	end->y, set_brightness(end->color, 0.1).color);
-	mlx_pixel_put(g_mlx, g_win, end->x,
-	end->y + 1, set_brightness(end->color, 0.9).color);
+	img_pixel_put(view, line->end->x, line->end->y,
+			set_brightness(line->end->color, 1));
+	img_pixel_put(view, line->end->x, line->end->y + 1,
+			set_brightness(line->end->color, 0));
 }
 
-static void		line_puty(t_point *start, t_point *end,
-							bool ck, double gradient)
+static void		line_puty(t_line *line, bool ck,
+		double gradient, t_view *view)
 {
 	double	x;
 	double	y;
 	int		i;
 	t_color	color;
 
-	x = (double)start->x;
-	y = (double)start->y;
+	x = (double)line->start->x;
+	y = (double)line->start->y;
 	i = 0;
-	while (y != end->y)
+	while (y <= line->end->y)
 	{
-		color.color = linear_gradient(start, end, ck, i++);
-		mlx_pixel_put(g_mlx, g_win, (int)floor(x),
-		(int)round(y), set_brightness(color, x - floor(x)).color);
-		mlx_pixel_put(g_mlx, g_win, (int)floor(x) + 1,
-		(int)round(y), set_brightness(color, 1 - x + floor(x)).color);
+		color.color = linear_gradient(line->start, line->end, ck, i++);
+		img_pixel_put(view, (int)floor(x), (int)round(y),
+				set_brightness(color, 1 - (x - floor(x))));
+		img_pixel_put(view, (int)floor(x) + 1, (int)round(y),
+				set_brightness(color, x - floor(x)));
 		y++;
 		x += gradient;
 	}
-	mlx_pixel_put(g_mlx, g_win, end->x,
-	end->y, set_brightness(end->color, 0.1).color);
-	mlx_pixel_put(g_mlx, g_win, end->x + 1,
-	end->y, set_brightness(end->color, 0.9).color);
+	img_pixel_put(view, line->end->x, line->end->y,
+			set_brightness(line->end->color, 1));
+	img_pixel_put(view, line->end->x + 1, line->end->y,
+			set_brightness(line->end->color, 0));
 }
 
-void			draw_line_antialias(t_point *start, t_point *end)
+void			draw_line_antialias(t_line *line, t_view *view)
 {
 	double	gradient;
 	bool	corner_koef;
 
-	if (start->x == end->x || start->y == end->y)
+	if (line->start->x == line->end->x ||
+			line->start->y == line->end->y)
 	{
-		draw_line(start, end);
+		draw_line(line, view);
 		return ;
 	}
-	corner_koef = abs(end->x - start->x) >= abs(end->y - start->y);
-	if (start->x > end->x)
-		ft_swap(start, end, sizeof(t_point));
-	if (!corner_koef && start->y > end->y)
-		ft_swap(start, end, sizeof(t_point));
-	gradient = corner_koef ? ((double)end->y - (double)start->y) /
-			((double)end->x - (double)start->x) :
-			((double)end->x - (double)start->x) /
-			((double)end->y - (double)start->y);
+	corner_koef = abs(line->end->x - line->start->x) >=
+			abs(line->end->y - line->start->y);
+	if (line->start->x > line->end->x)
+		ft_swap(line->start, line->end, sizeof(t_point));
+	if (!corner_koef && line->start->y > line->end->y)
+		ft_swap(line->start, line->end, sizeof(t_point));
+	gradient = corner_koef ? ((double)line->end->y - (double)line->start->y) /
+			((double)line->end->x - (double)line->start->x) :
+			((double)line->end->x - (double)line->start->x) /
+			((double)line->end->y - (double)line->start->y);
 	if (corner_koef)
-		line_putx(start, end, corner_koef, gradient);
+		line_putx(line, corner_koef, gradient, view);
 	else
-		line_puty(start, end, corner_koef, gradient);
+		line_puty(line, corner_koef, gradient, view);
 }
