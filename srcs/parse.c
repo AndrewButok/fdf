@@ -38,8 +38,8 @@ static void 	get_point_line(char ***points, t_point *row, int *rown)
 		if (val == NULL || (val[1] != NULL && val[2] != NULL)
 				|| !checkz(val[0]) || !checkcolorhex(val[1]))
 		{
-			arr2d_del((void*)(&points);
-			arr2d_del((void*)(&val);
+			arr2d_del((void*)(&points));
+			arr2d_del((void*)(&val));
 			perror(val == NULL ? "Point value split error" :
 					"Invalid input");
 		}

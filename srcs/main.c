@@ -19,7 +19,6 @@ int exit_x(void *param)
 {
 	param = NULL;
 	exit(1);
-	return (0);
 }
 
 int mouse_draw(int x, int y)
