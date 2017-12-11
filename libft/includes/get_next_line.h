@@ -13,7 +13,6 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # include "libft.h"
-# include <fcntl.h>
 # include <errno.h>
 # define BUFF_SIZE 2000
 # define IS_EOL(x) (x == '\n' || x == '\0')
