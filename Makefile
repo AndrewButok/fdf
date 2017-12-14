@@ -63,8 +63,8 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 clean: lclean
 	@if [ -d "$(OBJDIR)" ]; then rm -rf $(OBJDIR); fi
 
-fclean: lfclean
-	@if [ -f "$(CLION_EXE_DIR)/$(NAME)" ]; then rm -rf $(NAME); fi
+fclean: lfclean clean
+	@if [ -f "$(NAME)" ]; then rm -rf $(NAME); fi
 
 re: fclean all
 #	libft's rules
