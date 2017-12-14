@@ -56,7 +56,7 @@ $(OBJDIR):
 	@if [ ! -d "$(OBJDIR)" ]; then mkdir $(OBJDIR); fi
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	@$(GCC) -c -I $(HDR) -I $(LIBFTHDR) $< -o $@
+	$(GCC) -c -I $(HDR) -I $(LIBFTHDR) $< -o $@
 
 clean: lclean
 	@if [ -d "$(OBJDIR)" ]; then rm -rf $(OBJDIR); fi
@@ -74,7 +74,7 @@ $(LIBFTOBJDIR):
 	@if [ ! -d "$(LIBFTOBJDIR)" ]; then mkdir $(LIBFTOBJDIR); fi
 
 $(LIBFTOBJDIR)%.o: $(LIBFTDIR)%.c
-	@$(GCC) -c -I $(LIBFTHDR) $< -o $@
+	$(GCC) -c -I $(LIBFTHDR) $< -o $@
 
 lclean:
 	@if [ -d "$(LIBFTOBJDIR)" ]; then rm -rf $(LIBFTOBJDIR); fi
