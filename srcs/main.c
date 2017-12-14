@@ -51,12 +51,12 @@ int 	mouse_draw(int x, int y, t_view *view)
 	free_line(&line);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
+	return (1);
 }
 
 int		main(int argc, char **argv)
 {
 	int		map_fd;
-	t_point	**map;
 	t_view	*view;
 
 	if (argc < 2)
@@ -69,4 +69,5 @@ int		main(int argc, char **argv)
 	mlx_hook(view->win, 6, 0, &mouse_draw, view);
 	mlx_hook(view->win, 17, 1L<<17, &exit_x, NULL);
 	mlx_loop(view->mlx);
+	return (0);
 }

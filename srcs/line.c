@@ -31,7 +31,7 @@ t_line	*get_line(t_point *start, t_point *end)
 	return (result);
 }
 
-void	*free_line(t_line **line)
+void	free_line(t_line **line)
 {
 	free((*line)->start);
 	free((*line)->end);

@@ -52,7 +52,7 @@ void			draw_line(t_line *line, t_view *view);
 void			draw_line_antialias(t_line *line, t_view *view);
 void			img_pixel_put(t_view *view, int x, int y, t_color color);
 t_line			*get_line(t_point *start, t_point *end);
-void			*free_line(t_line **line);
+void			free_line(t_line **line);
 t_point			**get_map(int fd, int *width, int *depth);
 bool			is_null(void *link);
 
