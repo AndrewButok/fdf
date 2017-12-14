@@ -14,7 +14,7 @@ NAME = fdf
 #	C compiler run and default error flags
 GCC = gcc -Wall -Wextra -Werror -g
 #	output flag for GCC compiler with preseted way to CLION project dir
-OUT = -o $(CLION_EXE_DIR)/$(NAME)
+OUT = -o $(NAME)
 #	MLX flags
 MLX = -lmlx -framework OpenGL -framework AppKit
 #	fdf's sources
@@ -47,6 +47,8 @@ LIBFTSRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 			ft_swap.c ft_isupper.c ft_islower.c ft_sqrt.c ft_cshift.c get_next_line.c
 LIBFTOBJ = $(addprefix $(LIBFTOBJDIR), $(LIBFTSRC:.c=.o))
 
+.NOTPARALLEL = all fclean lclean clean lfclean re $(NAME) $(OBJDIR) $(LIBFT) $(LIBFTOBJDIR)
+
 all: $(LIBFT) $(NAME)
 #	fdf's rules
 $(NAME): $(OBJDIR) $(OBJ)
@@ -62,7 +64,7 @@ clean: lclean
 	@if [ -d "$(OBJDIR)" ]; then rm -rf $(OBJDIR); fi
 
 fclean: lfclean
-	@if [ -f "$(NAME)" ]; then rm -rf $(NAME); fi
+	@if [ -f "$(CLION_EXE_DIR)/$(NAME)" ]; then rm -rf $(NAME); fi
 
 re: fclean all
 #	libft's rules
