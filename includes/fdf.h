@@ -14,6 +14,8 @@
 # define FDF_H
 # include <mlx.h>
 # include <math.h>
+# include <errno.h>
+# include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
 # include "libft.h"
@@ -47,6 +49,15 @@ typedef struct	s_line
 	t_point	*end;
 }				t_line;
 
+typedef struct	s_mlist
+{
+	struct s_mlist	*next;
+	void			*content;
+}				t_mlist;
+
+void			memreg(t_mlist **mem_list, void *content);
+void			memdel(t_mlist **mem_list, t_mlist *memtodel);
+void			memclear(t_mlist **mem_list);
 int				linear_gradient(t_point *start, t_point *end, bool f, int i);
 void			draw_line(t_line *line, t_view *view);
 void			draw_line_antialias(t_line *line, t_view *view);
