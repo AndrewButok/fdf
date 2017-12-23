@@ -22,6 +22,7 @@ t_view	*view_init()
 	view = (t_view*)malloc(sizeof(t_view));
 	view->mlx = mlx_init();
 	view->win = mlx_new_window(view->mlx, WIN_WIDTH, WIN_HEIGHT, "fdf");
+	view->mem = NULL;
 	view->x = WIN_WIDTH;
 	view->y = WIN_HEIGHT;
 	return (view);
@@ -46,9 +47,9 @@ int 	mouse_draw(int x, int y, t_view *view)
 	end.y = y;
 	start.color.color = 0xff0000;
 	end.color.color = 0x0000ff;
-	t_line *line = get_line(&start, &end);
+	t_line *line = get_line(&start, &end, view);
 	draw_line_antialias(line, view);
-	free_line(&line);
+	free_line(&line, view);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
 	return (1);

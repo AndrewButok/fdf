@@ -19,7 +19,7 @@ OUT = -o $(NAME)
 MLX = -lmlx -framework OpenGL -framework AppKit
 #	fdf's sources
 SRCDIR = ./srcs/
-SRCFILES = draw_line.c draw_line_antialias.c line.c linear_gradient.c main.c memmanagement.c
+SRCFILES = draw_line.c draw_line_antialias.c linear_gradient.c main.c memmanagement.c line.c check.c
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
 #	fdf's objects
 OBJDIR = ./objs/

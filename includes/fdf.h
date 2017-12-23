@@ -22,19 +22,6 @@
 # include "mlx_color.h"
 # include "get_next_line.h"
 
-typedef struct	s_view
-{
-	void 	*mlx;
-	void 	*win;
-	void 	*img;
-	char 	*scene;
-	int 	bits_per_pixel;
-	int 	endian;
-	int 	x;
-	int 	y;
-	int 	size_line;
-}				t_view;
-
 typedef struct	s_point
 {
 	int		x;
@@ -55,16 +42,31 @@ typedef struct	s_mlist
 	void			*content;
 }				t_mlist;
 
+typedef struct	s_view
+{
+	void 	*mlx;
+	void 	*win;
+	void 	*img;
+	char 	*scene;
+	t_mlist	*mem;
+	int 	bits_per_pixel;
+	int 	endian;
+	int 	x;
+	int 	y;
+	int 	size_line;
+}				t_view;
+
 void			memreg(t_mlist **mem_list, void *content);
-void			memdel(t_mlist **mem_list, t_mlist *memtodel);
+void			memregdel(t_mlist **mem_list, void *memtodel);
 void			memclear(t_mlist **mem_list);
 int				linear_gradient(t_point *start, t_point *end, bool f, int i);
 void			draw_line(t_line *line, t_view *view);
 void			draw_line_antialias(t_line *line, t_view *view);
 void			img_pixel_put(t_view *view, int x, int y, t_color color);
-t_line			*get_line(t_point *start, t_point *end);
-void			free_line(t_line **line);
+t_line			*get_line(t_point *start, t_point *end, t_view *view);
+void			free_line(t_line **line, t_view *view);
 t_point			**get_map(int fd, int *width, int *depth);
 bool			is_null(void *link);
+void			line_check(t_view *view);
 
 #endif

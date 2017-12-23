@@ -29,27 +29,28 @@ void	memreg(t_mlist **mem_list, void *content)
 	*mem_list = new;
 }
 
-void	memregdel(t_mlist **mem_list, t_mlist *memtodel)
+void	memregdel(t_mlist **mem_list, void *memtodel)
 {
 	t_mlist *iterator;
+	t_mlist	*buff;
 
 	if (mem_list == NULL || memtodel == NULL || *mem_list == NULL)
 		return ;
-	if (*mem_list == memtodel)
+	if ((*mem_list)->content == memtodel)
 	{
-		memtodel = (*mem_list)->next;
+		iterator = (*mem_list)->next;
 		ft_memdel((void**)mem_list);
-		*mem_list = memtodel;
+		*mem_list = iterator;
 		return ;
 	}
 	iterator = *mem_list;
 	while (iterator != NULL)
 	{
-		if (iterator->next == memtodel)
+		if (iterator->next->content == memtodel)
 		{
-			memtodel = iterator->next->next;
+			buff = iterator->next->next;
 			ft_memdel((void**)&(iterator->next));
-			iterator->next = memtodel;
+			iterator->next = buff;
 			return ;
 		}
 		iterator = iterator->next;
