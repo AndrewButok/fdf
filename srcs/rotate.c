@@ -12,20 +12,35 @@
 
 #include "fdf.h"
 
-void	rotate_x(t_point *point, double l)
+void	rotate_x(t_point *ps, t_point *p0, double l)
 {
-	point->y = (int)round(point->y * cos(l) + point->z * sin(l));
-	point->z = (int)round(point->z * cos(l) - point->y * sin(l));
+	double ny;
+	double nz;
+
+	ny = ((ps->y - p0->y) * cos(l) + (ps->z - p0->z) * sin(l) + p0->y);
+	nz = ((ps->z - p0->z) - (ps->y - p0->y) * sin(l) + p0->z);
+	ps->y = (int)ny;
+	ps->z = (int)nz;
 }
 
-void	rotate_y(t_point *point, double l)
+void	rotate_y(t_point *ps, t_point *p0, double l)
 {
-	point->x = (int)round(point->x * cos(l) + point->z * sin(l));
-	point->z = (int)round(point->z * cos(l) - point->x * sin(l));
+	double nx;
+	double nz;
+
+	nx = ((ps->x - p0->x) * cos(l) + (ps->z - p0->z) * sin(l) + p0->x);
+	nz = ((ps->z - p0->z) * cos(l) - (ps->x - p0->x) * sin(l) + p0->z);
+	ps->x = (int)nx;
+	ps->z = (int)nz;
 }
 
-void	rotate_z(t_point *point, double l)
+void	rotate_z(t_point *ps, t_point *p0, double l)
 {
-	point->x = (int)round(point->x * cos(l) - point->y * sin(l));
-	point->y = (int)round(point->y * cos(l) + point->x * sin(l));
+	double ny;
+	double nx;
+
+	nx = ((ps->x - p0->x) * cos(l) - (ps->y - p0->y) * sin(l) + p0->x);
+	ny = ((ps->y - p0->y) * cos(l) + (ps->x - p0->x) * sin(l) + p0->y);
+	ps->x = (int)nx;
+	ps->y = (int)ny;
 }

@@ -12,8 +12,9 @@
 
 #include <printf.h>
 #include "fdf.h"
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+
+
+t_point start, end;
 
 t_view	*view_init()
 {
@@ -25,6 +26,15 @@ t_view	*view_init()
 	view->mem = NULL;
 	view->x = WIN_WIDTH;
 	view->y = WIN_HEIGHT;
+
+	start.x = 1200;
+	start.y = 600;
+	start.z = 400;
+	end.x = 1200;
+	end.y = 800;
+	end.z = 200;
+	start.color.color = 0xff0000;
+	end.color.color = 0x0000ff;
 	return (view);
 }
 
@@ -34,18 +44,54 @@ int 	exit_x(void *param)
 	exit(1);
 }
 
-int 	mouse_draw(int x, int y, t_view *view)
+//int 	mouse_draw(int x, int y, t_view *view)
+//{
+//	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
+//	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
+//			&view->size_line, &view->endian);
+//	t_point start, end;
+//
+//	rotate_x(&end, (x-400)*0.017/(57.3*20));
+//	rotate_x(&start, (x-400)*0.017/(57.3*20));
+//	rotate_y(&end, (y-300)*0.017/(57.3*20));
+//	rotate_y(&start, (y-300)*0.017/(57.3*20));
+//	x = y;
+//	//rotate_z(&end, y/1000000.0);
+//	start.color.color = 0xff0000;
+//	end.color.color = 0x0000ff;
+//	t_line *line = get_line(&start, &end, view);
+//	draw_line_antialias(line, view);
+//	free_line(&line, view);
+//	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
+//	mlx_destroy_image(view->mlx, view->img);
+//	return (1);
+//}
+
+int 	button_draw(int kkode, t_view *view)
 {
 	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
 	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
 			&view->size_line, &view->endian);
-	t_point start, end;
-	start.x = 400;
-	start.y = 300;
-	end.x = x;
-	end.y = y;
-	start.color.color = 0xff0000;
-	end.color.color = 0x0000ff;
+	if (kkode == 126)
+	{
+		//rotate_y(&end, 0.017);
+		rotate_y(&start, &end, 0.017);
+	}
+	if (kkode == 125)
+	{
+		//rotate_y(&end, -0.017);
+		rotate_y(&start, &end, -0.017);
+	}
+	if (kkode == 123)
+	{
+		//rotate_x(&end, -0.017);
+		rotate_x(&start, &end, -0.017);
+	}
+	if (kkode == 124)
+	{
+		//rotate_x(&end, 0.017);
+		rotate_x(&start, &end, 0.017);
+	}
 	t_line *line = get_line(&start, &end, view);
 	draw_line_antialias(line, view);
 	free_line(&line, view);
@@ -66,7 +112,7 @@ int		main(int argc, char **argv)
 	}
 	view = view_init();
 	map_fd = open(argv[1], O_RDONLY);
-	mlx_hook(view->win, 6, 0, &mouse_draw, view);
+	mlx_hook(view->win, 2, 5, &button_draw, view);
 	mlx_hook(view->win, 17, 1L<<17, &exit_x, NULL);
 	mlx_loop(view->mlx);
 	return (0);

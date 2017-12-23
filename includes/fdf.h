@@ -21,6 +21,8 @@
 # include "libft.h"
 # include "mlx_color.h"
 # include "get_next_line.h"
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 
 typedef struct	s_point
 {
@@ -59,6 +61,9 @@ typedef struct	s_view
 void			memreg(t_mlist **mem_list, void *content);
 void			memregdel(t_mlist **mem_list, void *memtodel);
 void			memclear(t_mlist **mem_list);
+void			rotate_x(t_point *ps, t_point *p0, double l);
+void			rotate_y(t_point *ps, t_point *p0, double l);
+void			rotate_z(t_point *ps, t_point *p0, double l);
 int				linear_gradient(t_point *start, t_point *end, bool f, int i);
 void			draw_line(t_line *line, t_view *view);
 void			draw_line_antialias(t_line *line, t_view *view);
