@@ -13,9 +13,9 @@
 #include "fdf.h"
 
 /*
- *	linear_gradient function return value of color for i point between start
- *	and end point.
- */
+**	linear_gradient function return value of color for i point between start
+**	and end point.
+*/
 
 int			linear_gradient(t_point *start, t_point *end, bool ck, int i)
 {

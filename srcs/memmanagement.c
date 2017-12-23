@@ -16,7 +16,8 @@ void	memreg(t_mlist **mem_list, void *content)
 {
 	t_mlist *new;
 
-	if (mem_list == NULL) return ;
+	if (mem_list == NULL)
+		return ;
 	errno = 0;
 	new = (t_mlist*)ft_memalloc(sizeof(t_mlist));
 	if (errno != 0)

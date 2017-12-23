@@ -35,9 +35,9 @@ t_line	*get_line(t_point *start, t_point *end, t_view *view)
 
 void	free_line(t_line **line, t_view *view)
 {
-	memregdel(&(view->mem),(*line)->start);
+	memregdel(&(view->mem), (*line)->start);
 	free((*line)->start);
-	memregdel(&(view->mem),(*line)->end);
+	memregdel(&(view->mem), (*line)->end);
 	free((*line)->end);
 	memregdel(&(view->mem), *line);
 	free(*line);
