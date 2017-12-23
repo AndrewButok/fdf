@@ -48,29 +48,6 @@ int 	exit_x(void *param)
 	exit(1);
 }
 
-//int 	mouse_draw(int x, int y, t_view *view)
-//{
-//	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
-//	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
-//			&view->size_line, &view->endian);
-//	t_point start, end;
-//
-//	rotate_x(&end, (x-400)*0.017/(57.3*20));
-//	rotate_x(&start, (x-400)*0.017/(57.3*20));
-//	rotate_y(&end, (y-300)*0.017/(57.3*20));
-//	rotate_y(&start, (y-300)*0.017/(57.3*20));
-//	x = y;
-//	//rotate_z(&end, y/1000000.0);
-//	start.color.color = 0xff0000;
-//	end.color.color = 0x0000ff;
-//	t_line *line = get_line(&start, &end, view);
-//	draw_line_antialias(line, view);
-//	free_line(&line, view);
-//	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
-//	mlx_destroy_image(view->mlx, view->img);
-//	return (1);
-//}
-
 int 	button_draw(int kkode, t_view *view)
 {
 	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
@@ -78,37 +55,31 @@ int 	button_draw(int kkode, t_view *view)
 			&view->size_line, &view->endian);
 	if (kkode == 13)
 	{
-		//rotate_y(&end, 0.017);
-		rotate_y(&start, &end, 0.017*5);
-		rotate_y(&start1, &end, 0.017*5);
-	}
-	if (kkode == 1)
-	{
-		//rotate_y(&end, -0.017);
-		rotate_y(&start, &end, -0.017*5);
-		rotate_y(&start1, &end, -0.017*5);
-	}
-	if (kkode == 0)
-	{
-		//rotate_x(&end, -0.017);
-		rotate_x(&start, &end, -0.017*5);
-		rotate_x(&start1, &end, -0.017*5);
-	}
-	if (kkode == 2)
-	{
-		//rotate_x(&end, 0.017);
 		rotate_x(&start, &end, 0.017*5);
 		rotate_x(&start1, &end, 0.017*5);
 	}
+	if (kkode == 1)
+	{
+		rotate_x(&start, &end, -0.017*5);
+		rotate_x(&start1, &end, -0.017*5);
+	}
+	if (kkode == 0)
+	{
+		rotate_y(&start, &end, -0.017*5);
+		rotate_y(&start1, &end, -0.017*5);
+	}
+	if (kkode == 2)
+	{
+		rotate_y(&start, &end, 0.017*5);
+		rotate_y(&start1, &end, 0.017*5);
+	}
 	if (kkode == 12)
 	{
-		//rotate_x(&end, 0.017);
 		rotate_z(&start, &end, -0.017*5);
 		rotate_z(&start1, &end, -0.017*5);
 	}
 	if (kkode == 14)
 	{
-		//rotate_x(&end, 0.017);
 		rotate_z(&start, &end, 0.017*5);
 		rotate_z(&start1, &end, 0.017*5);
 	}
