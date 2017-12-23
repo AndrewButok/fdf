@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx_color.h>
 #include "fdf.h"
 
 static t_color	set_brightness(t_color color, double brightness)

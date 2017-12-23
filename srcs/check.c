@@ -16,7 +16,7 @@ void	line_check(t_view *view)
 {
 	if (errno != 0)
 	{
-		perror("Line creation error");
+		perror("Line creation error occurred:");
 		memclear(&(view->mem));
 		exit(-1);
 	}

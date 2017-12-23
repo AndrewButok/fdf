@@ -19,59 +19,73 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include "libft.h"
-# include "mlx_color.h"
 # include "get_next_line.h"
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 
-typedef struct	s_point
+typedef union			u_color
+{
+	int		color;
+	struct
+	{
+		unsigned char	blue;
+		unsigned char	green;
+		unsigned char	red;
+		unsigned char	alpha;
+	}		spectrum;
+}						t_color;
+
+typedef struct			s_point
 {
 	int		x;
 	int		y;
-	int 	z;
+	int		z;
 	t_color	color;
-}				t_point;
+}						t_point;
 
-typedef struct	s_line
+typedef struct			s_line
 {
 	t_point *start;
 	t_point	*end;
-}				t_line;
+}						t_line;
 
-typedef struct	s_mlist
+typedef struct			s_mlist
 {
 	struct s_mlist	*next;
 	void			*content;
-}				t_mlist;
+}						t_mlist;
 
-typedef struct	s_view
+typedef struct			s_view
 {
-	void 	*mlx;
-	void 	*win;
-	void 	*img;
-	char 	*scene;
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*scene;
 	t_mlist	*mem;
-	int 	bits_per_pixel;
-	int 	endian;
-	int 	x;
-	int 	y;
-	int 	size_line;
-}				t_view;
+	int		bits_per_pixel;
+	int		endian;
+	int		x;
+	int		y;
+	int		size_line;
+}						t_view;
 
-void			memreg(t_mlist **mem_list, void *content);
-void			memregdel(t_mlist **mem_list, void *memtodel);
-void			memclear(t_mlist **mem_list);
-void			rotate_x(t_point *ps, t_point *p0, double l);
-void			rotate_y(t_point *ps, t_point *p0, double l);
-void			rotate_z(t_point *ps, t_point *p0, double l);
-int				linear_gradient(t_point *start, t_point *end, bool f, int i);
-void			draw_line(t_line *line, t_view *view);
-void			draw_line_antialias(t_line *line, t_view *view);
-void			img_pixel_put(t_view *view, int x, int y, t_color color);
-t_line			*get_line(t_point *start, t_point *end, t_view *view);
-void			free_line(t_line **line, t_view *view);
-t_point			**get_map(int fd, int *width, int *depth);
-bool			is_null(void *link);
-void			line_check(t_view *view);
+void					memreg(t_mlist **mem_list, void *content);
+void					memregdel(t_mlist **mem_list, void *memtodel);
+void					memclear(t_mlist **mem_list);
+void					rotate_x(t_point *ps, t_point *p0, double l);
+void					rotate_y(t_point *ps, t_point *p0, double l);
+void					rotate_z(t_point *ps, t_point *p0, double l);
+int						linear_gradient(t_point *start, t_point *end,
+		bool f, int i);
+void					draw_line(t_line *line, t_view *view);
+void					draw_line_antialias(t_line *line,
+		t_view *view);
+void					img_pixel_put(t_view *view,
+		int x, int y, t_color color);
+t_line					*get_line(t_point *start, t_point *end, t_view *view);
+void					free_line(t_line **line, t_view *view);
+t_point					**get_map(int fd, int *width, int *depth);
+bool					is_null(void *link);
+void					line_check(t_view *view);
 
 #endif

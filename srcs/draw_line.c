@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <printf.h>
-#include <mlx_color.h>
 #include "fdf.h"
 
 void			img_pixel_put(t_view *view, int x, int y, t_color color)
