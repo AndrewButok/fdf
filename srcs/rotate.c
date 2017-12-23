@@ -18,9 +18,9 @@ void	rotate_x(t_point *ps, t_point *p0, double l)
 	double nz;
 
 	ny = ((ps->y - p0->y) * cos(l) + (ps->z - p0->z) * sin(l) + p0->y);
-	nz = ((ps->z - p0->z) - (ps->y - p0->y) * sin(l) + p0->z);
-	ps->y = (int)ny;
-	ps->z = (int)nz;
+	nz = ((ps->z - p0->z) * cos(l) - (ps->y - p0->y) * sin(l) + p0->z);
+	ps->y = (int)round(ny);
+	ps->z = (int)round(nz);
 }
 
 void	rotate_y(t_point *ps, t_point *p0, double l)
@@ -30,8 +30,8 @@ void	rotate_y(t_point *ps, t_point *p0, double l)
 
 	nx = ((ps->x - p0->x) * cos(l) + (ps->z - p0->z) * sin(l) + p0->x);
 	nz = ((ps->z - p0->z) * cos(l) - (ps->x - p0->x) * sin(l) + p0->z);
-	ps->x = (int)nx;
-	ps->z = (int)nz;
+	ps->x = (int)round(nx);
+	ps->z = (int)round(nz);
 }
 
 void	rotate_z(t_point *ps, t_point *p0, double l)
@@ -41,6 +41,6 @@ void	rotate_z(t_point *ps, t_point *p0, double l)
 
 	nx = ((ps->x - p0->x) * cos(l) - (ps->y - p0->y) * sin(l) + p0->x);
 	ny = ((ps->y - p0->y) * cos(l) + (ps->x - p0->x) * sin(l) + p0->y);
-	ps->x = (int)nx;
-	ps->y = (int)ny;
+	ps->x = (int)round(nx);
+	ps->y = (int)round(ny);
 }
