@@ -14,7 +14,7 @@
 #include "fdf.h"
 
 
-t_point start, start1, end;
+t_point **points;
 
 t_view	*view_init()
 {
@@ -27,18 +27,23 @@ t_view	*view_init()
 	view->x = WIN_WIDTH;
 	view->y = WIN_HEIGHT;
 
-	start.x = 1200;
-	start.y = 600;
-	start.z = 200;
-	end.x = 1200;
-	end.y = 800;
-	end.z = 200;
-	start1.x = 1100;
-	start1.y = 500;
-	start1.z = 400;
-	start.color.color = 0xff0000;
-	start1.color.color = 0xff0000;
-	end.color.color = 0x0000ff;
+	points = (t_point**)malloc(sizeof(t_point*) * 4);
+	points[0] = (t_point*)malloc(sizeof(t_point));
+	points[1] = (t_point*)malloc(sizeof(t_point));
+	points[2] = (t_point*)malloc(sizeof(t_point));
+	points[3] = NULL;
+	points[0]->x = 400;
+	points[0]->y = 300;
+	points[0]->z = 200;
+	points[1]->x = 500;
+	points[1]->y = 300;
+	points[1]->z = 200;
+	points[2]->x = 100;
+	points[2]->y = 250;
+	points[2]->z = 400;
+	points[0]->color.color = 0xff0000;
+	points[1]->color.color = 0xff0000;
+	points[2]->color.color = 0x0000ff;
 	return (view);
 }
 
@@ -50,45 +55,41 @@ int 	exit_x(void *param)
 
 int 	button_draw(int kkode, t_view *view)
 {
+	int	axis;
+	int sign;
+
+
 	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
 	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
 			&view->size_line, &view->endian);
-	if (kkode == 13)
+	axis = 3;
+	sign = 0;
+	if (kkode == 13 || kkode == 1)
 	{
-		rotate_x(&start, &end, 0.017*5);
-		rotate_x(&start1, &end, 0.017*5);
+		axis = 0;
+		sign = kkode == 1 ? -1 : 1;
 	}
-	if (kkode == 1)
+	if (kkode == 0 || kkode == 2)
 	{
-		rotate_x(&start, &end, -0.017*5);
-		rotate_x(&start1, &end, -0.017*5);
+		axis = 1;
+		sign = kkode == 0 ? -1 : 1;
 	}
-	if (kkode == 0)
+	if (kkode == 12 || kkode == 14)
 	{
-		rotate_y(&start, &end, -0.017*5);
-		rotate_y(&start1, &end, -0.017*5);
+		axis = 2;
+		sign = kkode == 12 ? -1 : 1;
 	}
-	if (kkode == 2)
-	{
-		rotate_y(&start, &end, 0.017*5);
-		rotate_y(&start1, &end, 0.017*5);
-	}
-	if (kkode == 12)
-	{
-		rotate_z(&start, &end, -0.017*5);
-		rotate_z(&start1, &end, -0.017*5);
-	}
-	if (kkode == 14)
-	{
-		rotate_z(&start, &end, 0.017*5);
-		rotate_z(&start1, &end, 0.017*5);
-	}
-	t_line *line = get_line(&start, &end, view);
-	t_line *line1 = get_line(&start1, &end, view);
+	group_rotate(points, points[0], 0.017 * sign * 5, axis);
+
+	t_line *line = get_line(points[0], points[1], view);
 	draw_line_antialias(line, view);
-	draw_line_antialias(line1, view);
 	free_line(&line, view);
-	free_line(&line1, view);
+	line = get_line(points[0], points[2], view);
+	draw_line_antialias(line, view);
+	free_line(&line, view);
+	line = get_line(points[2], points[1], view);
+	draw_line_antialias(line, view);
+	free_line(&line, view);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
 	return (1);

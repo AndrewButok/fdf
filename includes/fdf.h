@@ -20,8 +20,8 @@
 # include <fcntl.h>
 # include "libft.h"
 # include "get_next_line.h"
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
 
 typedef union			u_color
 {
@@ -72,9 +72,7 @@ typedef struct			s_view
 void					memreg(t_mlist **mem_list, void *content);
 void					memregdel(t_mlist **mem_list, void *memtodel);
 void					memclear(t_mlist **mem_list);
-void					rotate_x(t_point *ps, t_point *p0, double l);
-void					rotate_y(t_point *ps, t_point *p0, double l);
-void					rotate_z(t_point *ps, t_point *p0, double l);
+void					group_rotate(t_point **ps, t_point *p0, double l, int axis);
 int						linear_gradient(t_point *start, t_point *end,
 		bool f, int i);
 void					draw_line(t_line *line, t_view *view);

@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	rotate_x(t_point *ps, t_point *p0, double l)
+static void	rotate_x(t_point *ps, t_point *p0, double l)
 {
 	double ny;
 	double nz;
@@ -23,7 +23,7 @@ void	rotate_x(t_point *ps, t_point *p0, double l)
 	ps->z = (int)round(nz);
 }
 
-void	rotate_y(t_point *ps, t_point *p0, double l)
+static void	rotate_y(t_point *ps, t_point *p0, double l)
 {
 	double nx;
 	double nz;
@@ -34,7 +34,7 @@ void	rotate_y(t_point *ps, t_point *p0, double l)
 	ps->z = (int)round(nz);
 }
 
-void	rotate_z(t_point *ps, t_point *p0, double l)
+static void	rotate_z(t_point *ps, t_point *p0, double l)
 {
 	double ny;
 	double nx;
@@ -43,4 +43,20 @@ void	rotate_z(t_point *ps, t_point *p0, double l)
 	ny = ((ps->y - p0->y) * cos(l) + (ps->x - p0->x) * sin(l) + p0->y);
 	ps->x = (int)round(nx);
 	ps->y = (int)round(ny);
+}
+
+void		group_rotate(t_point **ps, t_point *p0, double l, int axis)
+{
+	while (*ps != NULL)
+	{
+		if (axis == 0)
+			rotate_x(*ps, p0, l);
+		else if (axis == 1)
+			rotate_y(*ps, p0, l);
+		else if (axis == 2)
+			rotate_z(*ps, p0, l);
+		else
+			return ;
+		ps++;
+	}
 }
