@@ -47,16 +47,19 @@ static void	rotate_z(t_point *ps, t_point *p0, double l)
 
 void		group_rotate(t_point **ps, t_point *p0, double l, int axis)
 {
+	void (*rotate)(t_point*, t_point*, double);
+
+	if (axis == 0)
+		rotate = &rotate_x;
+	else if (axis == 1)
+		rotate = &rotate_y;
+	else if (axis == 2)
+		rotate = &rotate_z;
+	else
+		return ;
 	while (*ps != NULL)
 	{
-		if (axis == 0)
-			rotate_x(*ps, p0, l);
-		else if (axis == 1)
-			rotate_y(*ps, p0, l);
-		else if (axis == 2)
-			rotate_z(*ps, p0, l);
-		else
-			return ;
+		(*rotate)(*ps, p0, l);
 		ps++;
 	}
 }
