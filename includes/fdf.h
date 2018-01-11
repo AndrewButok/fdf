@@ -72,6 +72,7 @@ typedef struct			s_view
 	int		y;
 	int		size_line;
 	int		ospeed;
+	double	zoom;
 	void	(*draw_line)(t_line*, struct s_view*);
 }						t_view;
 
@@ -79,6 +80,7 @@ void					memreg(t_mlist **mem_list, void *content);
 void					memregdel(t_mlist **mem_list, void *memtodel);
 void					memclear(t_mlist **mem_list);
 void					group_rotate(t_point **ps, t_point *p0, double angle, int axis);
+void					zoom(t_point **ps, double x);
 int						linear_gradient(t_point *start, t_point *end,
 		bool f, int i);
 void					draw_line(t_line *line, t_view *view);

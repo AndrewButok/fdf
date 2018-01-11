@@ -27,6 +27,7 @@ t_view	*view_init()
 	view->x = WIN_WIDTH;
 	view->y = WIN_HEIGHT;
 	view->ospeed = 360;
+	view->zoom = 1.0;
 	(view->draw_line) = &draw_line;
 
 	points = (t_point**)malloc(sizeof(t_point*) * 4);
@@ -90,9 +91,9 @@ int 	button_draw(int kkode, t_view *view)
 	if (kkode == 53)
 		exit_x(view);
 	if (kkode == 126)
-		view->ospeed += view->ospeed == 360 ? 0 : 1;
+		view->ospeed += view->ospeed == 360 ? -360 : 1;
 	if (kkode == 125)
-		view->ospeed -= view->ospeed == 0 ? 0 : 1;
+		view->ospeed -= view->ospeed == 0 ? -360 : 1;
 	group_rotate(points, points[0],
 			0.01745 * sign * view->ospeed, axis);
 
@@ -111,6 +112,40 @@ int 	button_draw(int kkode, t_view *view)
 	return (1);
 }
 
+//int		mzoom(int bcode, int x, int y, t_view *view)
+//{
+//	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
+//	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
+//			&view->size_line, &view->endian);
+//	if (bcode == 4)
+//	{
+//		zoom(points, 1.0/view->zoom);
+//		view->zoom += 0.1;
+//		zoom(points, view->zoom);
+//	}
+//	if (bcode == 5)
+//	{
+//		zoom(points, 1.0/view->zoom);
+//		view->zoom -= 0.1;
+//		zoom(points, view->zoom);
+//	}
+//	x = 0;
+//	y = 0;
+//	t_line *line = get_line(points[0], points[1], view);
+//	view->draw_line(line, view);
+//	free_line(&line, view);
+//	line = get_line(points[0], points[2], view);
+//	view->draw_line(line, view);
+//	free_line(&line, view);
+//	line = get_line(points[2], points[1], view);
+//	view->draw_line(line, view);
+//	free_line(&line, view);
+//	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
+//	mlx_destroy_image(view->mlx, view->img);
+//	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("ospeed:", ft_itoa(view->ospeed)));
+//	return (1);
+//}
+
 int		main(int argc, char **argv)
 {
 	int		map_fd;
@@ -125,6 +160,7 @@ int		main(int argc, char **argv)
 	map_fd = open(argv[1], O_RDONLY);
 	mlx_hook(view->win, 2, 5, &button_draw, view);
 	mlx_hook(view->win, 17, 1L<<17, &exit_x, view);
+	//mlx_hook(view->win, 4, 0, &mzoom, view);
 	mlx_loop(view->mlx);
 	return (0);
 }
