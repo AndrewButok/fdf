@@ -45,7 +45,7 @@ static void	rotate_z(t_point *ps, t_point *p0, double l)
 	ps->y = (int)round(ny);
 }
 
-void		group_rotate(t_point **ps, t_point *p0, double l, int axis)
+void		group_rotate(t_point **ps, t_point *p0, double angle, int axis)
 {
 	void (*rotate)(t_point*, t_point*, double);
 
@@ -59,7 +59,7 @@ void		group_rotate(t_point **ps, t_point *p0, double l, int axis)
 		return ;
 	while (*ps != NULL)
 	{
-		(*rotate)(*ps, p0, l);
+		(*rotate)(*ps, p0, angle);
 		ps++;
 	}
 }

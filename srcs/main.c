@@ -26,6 +26,8 @@ t_view	*view_init()
 	view->mem = NULL;
 	view->x = WIN_WIDTH;
 	view->y = WIN_HEIGHT;
+	view->ospeed = 360;
+	(view->draw_line) = &draw_line;
 
 	points = (t_point**)malloc(sizeof(t_point*) * 4);
 	points[0] = (t_point*)malloc(sizeof(t_point));
@@ -47,9 +49,12 @@ t_view	*view_init()
 	return (view);
 }
 
-int 	exit_x(void *param)
+int 	exit_x(t_view *view)
 {
-	param = NULL;
+	memclear(&view->mem);
+	mlx_destroy_window(view->mlx, view->win);
+	free(view->mlx);
+	free(view);
 	exit(1);
 }
 
@@ -79,19 +84,30 @@ int 	button_draw(int kkode, t_view *view)
 		axis = 2;
 		sign = kkode == 12 ? -1 : 1;
 	}
-	group_rotate(points, points[0], 0.017 * sign * 5, axis);
+	if (kkode == 5)
+		view->draw_line = view->draw_line == &draw_line ?
+				&draw_line_antialias : &draw_line;
+	if (kkode == 53)
+		exit_x(view);
+	if (kkode == 126)
+		view->ospeed += view->ospeed == 360 ? 0 : 1;
+	if (kkode == 125)
+		view->ospeed -= view->ospeed == 0 ? 0 : 1;
+	group_rotate(points, points[0],
+			0.01745 * sign * view->ospeed, axis);
 
 	t_line *line = get_line(points[0], points[1], view);
-	draw_line_antialias(line, view);
+	view->draw_line(line, view);
 	free_line(&line, view);
 	line = get_line(points[0], points[2], view);
-	draw_line_antialias(line, view);
+	view->draw_line(line, view);
 	free_line(&line, view);
 	line = get_line(points[2], points[1], view);
-	draw_line_antialias(line, view);
+	view->draw_line(line, view);
 	free_line(&line, view);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
+	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("ospeed:", ft_itoa(view->ospeed)));
 	return (1);
 }
 
@@ -108,7 +124,7 @@ int		main(int argc, char **argv)
 	view = view_init();
 	map_fd = open(argv[1], O_RDONLY);
 	mlx_hook(view->win, 2, 5, &button_draw, view);
-	mlx_hook(view->win, 17, 1L<<17, &exit_x, NULL);
+	mlx_hook(view->win, 17, 1L<<17, &exit_x, view);
 	mlx_loop(view->mlx);
 	return (0);
 }
