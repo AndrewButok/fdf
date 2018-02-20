@@ -22,7 +22,7 @@ void	memreg(t_mlist **mem_list, void *content)
 	new = (t_mlist*)ft_memalloc(sizeof(t_mlist));
 	if (errno != 0)
 	{
-		perror("The following memory management error occurred:");
+		perror("The following memory management error occurred");
 		exit(-1);
 	}
 	new->content = content;

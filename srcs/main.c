@@ -10,13 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <printf.h>
 #include "fdf.h"
 
-
-t_point **points;
-
-t_view	*view_init()
+t_view	*view_init(int fd)
 {
 	t_view *view;
 
@@ -29,24 +25,8 @@ t_view	*view_init()
 	view->ospeed = 360;
 	view->zoom = 1.0;
 	(view->draw_line) = &draw_line;
-
-	points = (t_point**)malloc(sizeof(t_point*) * 4);
-	points[0] = (t_point*)malloc(sizeof(t_point));
-	points[1] = (t_point*)malloc(sizeof(t_point));
-	points[2] = (t_point*)malloc(sizeof(t_point));
-	points[3] = NULL;
-	points[0]->x = 400;
-	points[0]->y = 300;
-	points[0]->z = 200;
-	points[1]->x = 500;
-	points[1]->y = 300;
-	points[1]->z = 200;
-	points[2]->x = 100;
-	points[2]->y = 250;
-	points[2]->z = 400;
-	points[0]->color.color = 0xff0000;
-	points[1]->color.color = 0xff0000;
-	points[2]->color.color = 0x0000ff;
+	view->points = NULL;
+	parse_points(fd, view);
 	return (view);
 }
 
@@ -59,7 +39,7 @@ int 	exit_x(t_view *view)
 	exit(1);
 }
 
-int 	button_draw(int kkode, t_view *view)
+int 	button_action(int kkode, t_view *view)
 {
 	int	axis;
 	int sign;
@@ -94,57 +74,15 @@ int 	button_draw(int kkode, t_view *view)
 		view->ospeed += view->ospeed == 360 ? -360 : 1;
 	if (kkode == 125)
 		view->ospeed -= view->ospeed == 0 ? -360 : 1;
+	/*
 	group_rotate(points, points[0],
 			0.01745 * sign * view->ospeed, axis);
-
-	t_line *line = get_line(points[0], points[1], view);
-	view->draw_line(line, view);
-	free_line(&line, view);
-	line = get_line(points[0], points[2], view);
-	view->draw_line(line, view);
-	free_line(&line, view);
-	line = get_line(points[2], points[1], view);
-	view->draw_line(line, view);
-	free_line(&line, view);
+	*/
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
 	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("ospeed:", ft_itoa(view->ospeed)));
 	return (1);
 }
-
-//int		mzoom(int bcode, int x, int y, t_view *view)
-//{
-//	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
-//	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
-//			&view->size_line, &view->endian);
-//	if (bcode == 4)
-//	{
-//		zoom(points, 1.0/view->zoom);
-//		view->zoom += 0.1;
-//		zoom(points, view->zoom);
-//	}
-//	if (bcode == 5)
-//	{
-//		zoom(points, 1.0/view->zoom);
-//		view->zoom -= 0.1;
-//		zoom(points, view->zoom);
-//	}
-//	x = 0;
-//	y = 0;
-//	t_line *line = get_line(points[0], points[1], view);
-//	view->draw_line(line, view);
-//	free_line(&line, view);
-//	line = get_line(points[0], points[2], view);
-//	view->draw_line(line, view);
-//	free_line(&line, view);
-//	line = get_line(points[2], points[1], view);
-//	view->draw_line(line, view);
-//	free_line(&line, view);
-//	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
-//	mlx_destroy_image(view->mlx, view->img);
-//	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("ospeed:", ft_itoa(view->ospeed)));
-//	return (1);
-//}
 
 int		main(int argc, char **argv)
 {
@@ -156,11 +94,16 @@ int		main(int argc, char **argv)
 		ft_putendl("usage: fdf map_file [args]");
 		return (0);
 	}
-	view = view_init();
+	errno = 0;
 	map_fd = open(argv[1], O_RDONLY);
-	mlx_hook(view->win, 2, 5, &button_draw, view);
+	if (errno)
+	{
+		perror("File opening error");
+		exit(-1);
+	}
+	view = view_init(map_fd);
+	mlx_hook(view->win, 2, 5, &button_action, view);
 	mlx_hook(view->win, 17, 1L<<17, &exit_x, view);
-	//mlx_hook(view->win, 4, 0, &mzoom, view);
 	mlx_loop(view->mlx);
 	return (0);
 }

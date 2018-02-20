@@ -41,10 +41,6 @@ typedef struct			s_point
 	int		y;
 	int		z;
 	t_color	color;
-	struct s_point *left;
-	struct s_point *right;
-	struct s_point *bottom;
-	struct s_point *top;
 }						t_point;
 
 typedef struct			s_line
@@ -65,6 +61,7 @@ typedef struct			s_view
 	void	*win;
 	void	*img;
 	char	*scene;
+	t_list	*points;
 	t_mlist	*mem;
 	int		bits_per_pixel;
 	int		endian;
@@ -79,6 +76,7 @@ typedef struct			s_view
 void					memreg(t_mlist **mem_list, void *content);
 void					memregdel(t_mlist **mem_list, void *memtodel);
 void					memclear(t_mlist **mem_list);
+int 					exit_x(t_view *view);
 void					group_rotate(t_point **ps, t_point *p0, double angle, int axis);
 void					zoom(t_point **ps, double x);
 int						linear_gradient(t_point *start, t_point *end,
@@ -93,5 +91,8 @@ void					free_line(t_line **line, t_view *view);
 t_point					**get_map(int fd, int *width, int *depth);
 bool					is_null(void *link);
 void					line_check(t_view *view);
+void					parse_points(int fd, t_view *view);
+void					ft_splitedrowdel(void *str, size_t size);
+void					check_rows(t_list **rows, t_view *view);
 
 #endif
