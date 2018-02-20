@@ -18,12 +18,10 @@ void	check_rows(t_list **rows, t_view *view)
 	size_t 	cv;
 
 	iter = *rows;
-	cv = 0;
+	cv = iter->content_size;
 	while (iter)
 	{
-		if (cv == 0)
-			cv = iter->content_size;
-		else if (cv != iter->content_size)
+		if (cv != iter->content_size)
 		{
 			ft_putendl("Wrong map size.");
 			ft_lstdel(rows, &ft_splitedrowdel);
