@@ -37,12 +37,12 @@ typedef union			u_color
 
 typedef struct			s_point
 {
-	int		x;
-	int		y;
-	int		z;
-	t_color	color;
-	t_point *right;
-	t_point *bottom;
+	int				x;
+	int				y;
+	int				z;
+	t_color			color;
+	struct s_point	*right;
+	struct s_point	*bottom;
 }						t_point;
 
 typedef struct			s_line

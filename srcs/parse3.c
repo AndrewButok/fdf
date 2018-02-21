@@ -22,6 +22,7 @@ void	find_neighbours(t_list *points, size_t rowsize)
 	{
 		current = points->content;
 		current->right = points->next != NULL ? ((t_point*)points->next->content) : NULL;
+
 		points = points->next;
 	}
 }
