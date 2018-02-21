@@ -40,16 +40,16 @@ void	get_rows(int fd, t_list **rows, t_view *view)
 	}
 	if (gnlr == -1)
 	{
-		perror("Map reading error");
-		ft_lstdel(rows,&ft_rowdel);
+		perror("Map reading error.");
+		ft_lstdel(rows, &ft_rowdel);
 		exit_x(view);
 	}
 }
 
 void	ft_splitedrowdel(void *str, size_t size)
 {
-	char **strs;
-	size_t i;
+	char	**strs;
+	size_t	i;
 
 	strs = (char**)str;
 	i = 0;
@@ -60,7 +60,7 @@ void	ft_splitedrowdel(void *str, size_t size)
 
 void	get_splited_rows(t_list **rows, t_view *view)
 {
-	size_t		len;
+	size_t	len;
 	char	**splitrow;
 	t_list	*it;
 
@@ -77,25 +77,21 @@ void	get_splited_rows(t_list **rows, t_view *view)
 		it->content_size = len;
 		it = it->next;
 	}
-	it = *rows;
-	while (it)
-	{
-		if (it->content == NULL)
-		{
-			ft_putendl("Row split error.");
-			ft_lstdel(rows, &ft_splitedrowdel);
-			exit_x(view);
-		}
-		it = it->next;
-	}
+	check_splited_rows(rows, view);
 }
 
 void	parse_points(int fd, t_view *view)
 {
 	t_list *rows;
+	size_t rowlen;
 
 	rows = NULL;
 	get_rows(fd, &rows, view);
 	get_splited_rows(&rows, view);
-	check_rows(&rows, view);
+	if (rows != NULL)
+	{
+		rowlen = check_size(&rows, view);
+		get_points(&rows, view);
+		find_neighbours(view->points, rowlen);
+	}
 }

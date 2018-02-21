@@ -41,6 +41,8 @@ typedef struct			s_point
 	int		y;
 	int		z;
 	t_color	color;
+	t_point *right;
+	t_point *bottom;
 }						t_point;
 
 typedef struct			s_line
@@ -93,6 +95,11 @@ bool					is_null(void *link);
 void					line_check(t_view *view);
 void					parse_points(int fd, t_view *view);
 void					ft_splitedrowdel(void *str, size_t size);
-void					check_rows(t_list **rows, t_view *view);
+size_t					check_size(t_list **rows, t_view *view);
+void					get_points(t_list **rows, t_view *view);
+int 					ft_hexatoi(char *str);
+void					check_splited_rows(t_list **rows, t_view *view);
+void					readpoint_check(int r, t_list **rows, t_view *view);
+void					find_neighbours(t_list *points, size_t rowsize);
 
 #endif
