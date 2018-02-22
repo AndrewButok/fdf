@@ -37,6 +37,7 @@ void	get_rows(int fd, t_list **rows, t_view *view)
 			memreg(&view->mem, b);
 			ft_lstadd(rows, b);
 		}
+		free(str);
 	}
 	if (gnlr == -1)
 	{
@@ -54,7 +55,7 @@ void	ft_splitedrowdel(void *str, size_t size)
 	strs = (char**)str;
 	i = 0;
 	while (i < size)
-		free(strs[i++]);
+		ft_strdel(&strs[i++]);
 	free(strs);
 }
 
@@ -94,15 +95,14 @@ void	parse_points(int fd, t_view *view)
 		rowlen = check_size(&rows, view);
 		get_points(&rows, view);
 		find_neighbours(view->points, rowlen);
-		rows = view->points;
 		rowlen = 0;
 		iter = rows;
-		//TODO ROWS CLEAN
-		while (rows)
+		while (iter)
 		{
 			rowlen++;
-			rows = rows->next;
+			iter = iter->next;
 		}
+		ft_lstdel(&rows, &ft_splitedrowdel);
 		view->plen = rowlen;
 	}
 }

@@ -31,8 +31,7 @@ t_list	*spush(t_list *l, t_list *r)
 	if (l != NULL && (r == NULL ||
 			((t_point*)l->content)->z > ((t_point*)r->content)->z))
 		return (l);
-	if (r != NULL && (l == NULL ||
-			((t_point*)l->content)->z <= ((t_point*)r->content)->z))
+	else
 		return (r);
 }
 
@@ -72,11 +71,11 @@ void	merge_sort(t_list **list, size_t len)
 	l = *list;
 	r = *list;
 	lr = len / 2;
-	ll = len - ll;
+	ll = len - lr;
 	r = merge(l, ll);
 	if (ll > 1)
-		merge_sort(l, ll);
+		merge_sort(&l, ll);
 	if (lr > 1)
-		merge_sort(r, lr);
+		merge_sort(&r, lr);
 	*list = push(l, r);
 }
