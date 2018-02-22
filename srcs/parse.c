@@ -83,6 +83,7 @@ void	get_splited_rows(t_list **rows, t_view *view)
 void	parse_points(int fd, t_view *view)
 {
 	t_list *rows;
+	t_list *iter;
 	size_t rowlen;
 
 	rows = NULL;
@@ -95,6 +96,8 @@ void	parse_points(int fd, t_view *view)
 		find_neighbours(view->points, rowlen);
 		rows = view->points;
 		rowlen = 0;
+		iter = rows;
+		//TODO ROWS CLEAN
 		while (rows)
 		{
 			rowlen++;
