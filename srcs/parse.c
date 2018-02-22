@@ -93,5 +93,13 @@ void	parse_points(int fd, t_view *view)
 		rowlen = check_size(&rows, view);
 		get_points(&rows, view);
 		find_neighbours(view->points, rowlen);
+		rows = view->points;
+		rowlen = 0;
+		while (rows)
+		{
+			rowlen++;
+			rows = rows->next;
+		}
+		view->plen = rowlen;
 	}
 }

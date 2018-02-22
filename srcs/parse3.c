@@ -36,3 +36,16 @@ void	find_neighbours(t_list *points, size_t rowsize)
 		points = points->next;
 	}
 }
+
+int		check_num(char *str)
+{
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}

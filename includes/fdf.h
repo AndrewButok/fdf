@@ -64,6 +64,7 @@ typedef struct			s_view
 	void	*img;
 	char	*scene;
 	t_list	*points;
+    size_t  plen;
 	t_mlist	*mem;
 	int		bits_per_pixel;
 	int		endian;
@@ -101,5 +102,6 @@ int 					ft_hexatoi(char *str);
 void					check_splited_rows(t_list **rows, t_view *view);
 void					readpoint_check(int r, t_list **rows, t_view *view);
 void					find_neighbours(t_list *points, size_t rowsize);
+int						check_num(char *str);
 
 #endif

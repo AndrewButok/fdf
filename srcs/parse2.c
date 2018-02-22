@@ -72,6 +72,11 @@ int		get_point(char *str, size_t x, size_t z, t_view *view)
 	point->z = (int)z;
 	point->y = ft_atoi(arr[0]);
 	point->color.color = ft_hexatoi(arr[1]);
+	free(arr[0]);
+	free(arr[1]);
+	free(arr);
+	point->right = NULL;
+	point->bottom = NULL;
 	nls = ft_lstnew(point, sizeof(point));
 	memreg(&view->mem, nls);
 	ft_lstadd(&(view->points), nls);
@@ -80,19 +85,11 @@ int		get_point(char *str, size_t x, size_t z, t_view *view)
 
 int		get_point_wc(char *str, size_t x, size_t z, t_view *view)
 {
-	char	*iter;
 	t_point	*point;
 	t_list	*nls;
 
-	iter = str;
-	if (*iter == '-' || *iter == '+')
-		iter++;
-	while (*iter)
-	{
-		if (!ft_isdigit(*iter))
-			return (0);
-		iter++;
-	}
+	if (!check_num(str))
+		return (0);
 	point = (t_point*)malloc(sizeof(t_point));
 	if (point == NULL)
 		return (0);
@@ -101,6 +98,8 @@ int		get_point_wc(char *str, size_t x, size_t z, t_view *view)
 	point->z = (int)z;
 	point->y = ft_atoi(str);
 	point->color.color = 0xffffff;
+	point->right = NULL;
+	point->bottom = NULL;
 	nls = ft_lstnew(point, sizeof(point));
 	memreg(&view->mem, nls);
 	ft_lstadd(&(view->points), nls);
