@@ -72,9 +72,7 @@ int		get_point(char *str, size_t x, size_t z, t_view *view)
 	point->z = (int)z;
 	point->y = ft_atoi(arr[0]);
 	point->color.color = ft_hexatoi(arr[1]);
-	free(arr[0]);
-	free(arr[1]);
-	free(arr);
+	ft_splitedrowdel(arr,3);
 	point->right = NULL;
 	point->bottom = NULL;
 	nls = ft_lstnew(point, sizeof(point));

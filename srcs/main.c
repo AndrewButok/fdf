@@ -36,6 +36,8 @@ int 	exit_x(t_view *view)
 	mlx_destroy_window(view->mlx, view->win);
 	free(view->mlx);
 	free(view);
+	while (1)
+		sleep(1);
 	exit(1);
 }
 
