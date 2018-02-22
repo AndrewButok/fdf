@@ -17,11 +17,14 @@ void	find_neighbours(t_list *points, size_t rowsize)
 	t_point	*current;
 	t_list	*iter;
 	size_t	l;
+	size_t	rl;
 
+	rl = 0;
 	while (points)
 	{
 		current = points->content;
-		current->right = points->next != NULL ? ((t_point*)points->next->content) : NULL;
+		current->right = points->next != NULL && rl != rowsize - 1 ?
+				((t_point*)points->next->content) : NULL;
 		l = 0;
 		iter = points;
 		while (l < rowsize && iter)
@@ -34,6 +37,7 @@ void	find_neighbours(t_list *points, size_t rowsize)
 		else
 			current->bottom = NULL;
 		points = points->next;
+		rl = rl == rowsize - 1 ? 0 : rl + 1;
 	}
 }
 
