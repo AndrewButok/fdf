@@ -64,6 +64,7 @@ typedef struct			s_view
 	void	*img;
 	char	*scene;
 	t_list	*points;
+	t_point	*rp;
     size_t  plen;
 	t_mlist	*mem;
 	int		bits_per_pixel;
@@ -80,7 +81,7 @@ void					memreg(t_mlist **mem_list, void *content);
 void					memregdel(t_mlist **mem_list, void *memtodel);
 void					memclear(t_mlist **mem_list);
 int 					exit_x(t_view *view);
-void					group_rotate(t_point **ps, t_point *p0, double angle, int axis);
+void					group_rotate(t_list **ps, t_point *p0, double angle, int axis);
 void					zoom(t_point **ps, double x);
 int						linear_gradient(t_point *start, t_point *end,
 		bool f, int i);
@@ -104,5 +105,7 @@ void					readpoint_check(int r, t_list **rows, t_view *view);
 void					find_neighbours(t_list *points, size_t rowsize);
 int						check_num(char *str);
 void					merge_sort(t_list **list, size_t len);
+void					select_rp(t_view *view);
+void					draw_fdf(t_view *view);
 
 #endif

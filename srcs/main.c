@@ -28,6 +28,7 @@ t_view	*view_init(int fd)
 	view->points = NULL;
 	parse_points(fd, view);
 	merge_sort(&view->points, view->plen);
+	select_rp(view);
 	return (view);
 }
 
@@ -75,14 +76,13 @@ int 	button_action(int kkode, t_view *view)
 		view->ospeed += view->ospeed == 360 ? -360 : 1;
 	if (kkode == 125)
 		view->ospeed -= view->ospeed == 0 ? -360 : 1;
-	/*
-	group_rotate(points, points[0],
+	group_rotate(&view->points, view->rp,
 			0.01745 * sign * view->ospeed, axis);
-	*/
 	merge_sort(&view->points, view->plen);
+	draw_fdf(view);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
-	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("ospeed:", ft_itoa(view->ospeed)));
+	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("rotation speed:", ft_itoa(view->ospeed)));
 	return (1);
 }
 

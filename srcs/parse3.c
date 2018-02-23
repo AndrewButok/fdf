@@ -53,3 +53,26 @@ int		check_num(char *str)
 	}
 	return (1);
 }
+
+void	select_rp(t_view *view)
+{
+	t_list *points;
+
+	points = view->points;
+	view->rp = (t_point*)malloc(sizeof(t_point));
+	if (view->rp == NULL)
+	{
+		ft_putendl_fd("Error: Rotation point malloc error", 2);
+		exit_x(view);
+	}
+	memreg(&view->mem, view->rp);
+	view->rp->y = 0;
+	while (points)
+	{
+		if (((t_point*)points->content)->x > view->rp->x)
+			view->rp->x = ((t_point*)points->content)->x;
+		if (((t_point*)points->content)->z > view->rp->z)
+			view->rp->z = ((t_point*)points->content)->z;
+		points = points->next;
+	}
+}

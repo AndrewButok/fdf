@@ -21,7 +21,7 @@ MLX = -lmlx -framework OpenGL -framework AppKit
 SRCDIR = ./srcs/
 SRCFILES = draw_line.c draw_line_antialias.c linear_gradient.c main.c \
 			memmanagement.c line.c check.c rotate.c parse.c \
-			parse2.c ft_hexatoi.c parse3.c merge_sort.c
+			parse2.c ft_hexatoi.c parse3.c merge_sort.c draw_fdf.c
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
 #	fdf's objects
 OBJDIR = ./objs/
