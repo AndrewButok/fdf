@@ -76,7 +76,7 @@ int 	button_action(int kkode, t_view *view)
 		view->ospeed += view->ospeed == 360 ? -360 : 1;
 	if (kkode == 125)
 		view->ospeed -= view->ospeed == 0 ? -360 : 1;
-	group_rotate(&view->points, view->rp,
+	group_rotate(view->points, view->rp,
 			0.01745 * sign * view->ospeed, axis);
 	merge_sort(&view->points, view->plen);
 	draw_fdf(view);
