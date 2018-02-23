@@ -28,5 +28,5 @@ void	button_rotate(int key, t_view *view)
 	if (key == AD_KEY)
 		view->ospeed -= view->ospeed == 0 ? -360 : 1;
 	group_rotate(view->points, view->rp,
-			0.01745 * sign * view->ospeed, axis);
+			0.0174532925 * sign * view->ospeed, axis);
 }

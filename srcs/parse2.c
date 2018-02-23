@@ -68,9 +68,9 @@ int		get_point(char *str, size_t x, size_t z, t_view *view)
 	if (point == NULL)
 		return (0);
 	memreg(&view->mem, point);
-	point->x = (int)x;
-	point->z = (int)z;
-	point->y = ft_atoi(arr[0]);
+	point->x = (int)x *10;
+	point->z = (int)z *10;
+	point->y = ft_atoi(arr[0]) * 10;
 	point->color.color = ft_hexatoi(arr[1]);
 	ft_splitedrowdel(arr, 3);
 	point->right = NULL;
@@ -92,9 +92,9 @@ int		get_point_wc(char *str, size_t x, size_t z, t_view *view)
 	if (point == NULL)
 		return (0);
 	memreg(&view->mem, point);
-	point->x = (int)x;
-	point->z = (int)z;
-	point->y = ft_atoi(str);
+	point->x = (int)x * 10;
+	point->z = (int)z * 10;
+	point->y = ft_atoi(str) * 10;
 	point->color.color = 0xffffff;
 	point->right = NULL;
 	point->bottom = NULL;
