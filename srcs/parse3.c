@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: abutok <abutok@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 14:23:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/02/21 14:23:00 by abutok           ###   ########.fr       */
+/*   Updated: 2018/02/23 15:26:04 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,22 @@ void	select_rp(t_view *view)
 
 	points = view->points;
 	view->rp = (t_point*)malloc(sizeof(t_point));
-	if (view->rp == NULL)
-	{
-		ft_putendl_fd("Error: Rotation point malloc error", 2);
-		exit_x(view);
-	}
+	rp_check(view);
 	memreg(&view->mem, view->rp);
-	view->rp->y = 0;
+	view->rp->x = ((t_point*)points->content)->x;
+	view->rp->y = ((t_point*)points->content)->y;
+	view->rp->z = ((t_point*)points->content)->z;
 	while (points)
 	{
 		if (((t_point*)points->content)->x > view->rp->x)
 			view->rp->x = ((t_point*)points->content)->x;
 		if (((t_point*)points->content)->z > view->rp->z)
 			view->rp->z = ((t_point*)points->content)->z;
+		if (((t_point*)points->content)->y > view->rp->y)
+			view->rp->y = ((t_point*)points->content)->y;
 		points = points->next;
 	}
+	view->rp->x /= 2;
+	view->rp->y /= 2;
+	view->rp->z /= 2;
 }

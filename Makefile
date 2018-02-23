@@ -6,7 +6,7 @@
 #    By: abutok <abutok@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/25 11:13:02 by abutok            #+#    #+#              #
-#    Updated: 2017/12/12 10:28:10 by abutok           ###   ########.fr        #
+#    Updated: 2018/02/23 14:13:28 by abutok           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ MLX = -lmlx -framework OpenGL -framework AppKit
 SRCDIR = ./srcs/
 SRCFILES = draw_line.c draw_line_antialias.c linear_gradient.c main.c \
 			memmanagement.c line.c check.c rotate.c parse.c \
-			parse2.c ft_hexatoi.c parse3.c merge_sort.c draw_fdf.c
+			parse2.c ft_hexatoi.c parse3.c merge_sort.c draw_fdf.c \
+			button_jobs.c
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
 #	fdf's objects
 OBJDIR = ./objs/

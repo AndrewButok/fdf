@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: abutok <abutok@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 11:15:00 by abutok            #+#    #+#             */
-/*   Updated: 2017/12/23 11:15:00 by abutok           ###   ########.fr       */
+/*   Updated: 2018/02/23 15:26:18 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,14 @@ void	check_splited_rows(t_list **rows, t_view *view)
 			exit_x(view);
 		}
 		it = it->next;
+	}
+}
+
+void	rp_check(t_view *view)
+{
+	if (view->rp == NULL)
+	{
+		ft_putendl_fd("Error: Rotation point malloc error", 2);
+		exit_x(view);
 	}
 }

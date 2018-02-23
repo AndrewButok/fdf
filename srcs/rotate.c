@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: abutok <abutok@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 12:32:00 by abutok            #+#    #+#             */
-/*   Updated: 2017/12/23 12:32:00 by abutok           ###   ########.fr       */
+/*   Updated: 2018/02/23 15:28:09 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void		group_rotate(t_list *ps, t_point *p0, double angle, int axis)
 	}
 }
 
-void		zoom(t_point *ps, double x)
+void		zoom(t_list *ps, double x)
 {
 	while (ps != NULL)
 	{
-		ps->x *= x;
-		ps->y *= x;
-		ps->z *= x;
-		ps++;
+		((t_point*)ps->content)->x *= x;
+		((t_point*)ps->content)->y *= x;
+		((t_point*)ps->content)->z *= x;
+		ps = ps->next;
 	}
 }

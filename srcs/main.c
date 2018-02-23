@@ -6,7 +6,7 @@
 /*   By: abutok <abutok@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 23:04:07 by abutok            #+#    #+#             */
-/*   Updated: 2017/12/05 00:08:34 by abutok           ###   ########.fr       */
+/*   Updated: 2018/02/23 15:20:58 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,43 +41,18 @@ int 	exit_x(t_view *view)
 	exit(1);
 }
 
-int 	button_action(int kkode, t_view *view)
+int 	button_action(int key, t_view *view)
 {
-	int	axis;
-	int sign;
-
-
 	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
 	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
 			&view->size_line, &view->endian);
-	axis = 3;
-	sign = 0;
-	if (kkode == 13 || kkode == 1)
-	{
-		axis = 0;
-		sign = kkode == 1 ? -1 : 1;
-	}
-	if (kkode == 0 || kkode == 2)
-	{
-		axis = 1;
-		sign = kkode == 0 ? -1 : 1;
-	}
-	if (kkode == 12 || kkode == 14)
-	{
-		axis = 2;
-		sign = kkode == 12 ? -1 : 1;
-	}
-	if (kkode == 5)
+	
+	if (key == G_KEY)
 		view->draw_line = view->draw_line == &draw_line ?
 				&draw_line_antialias : &draw_line;
-	if (kkode == 53)
+	if (key == ESC_KEY)
 		exit_x(view);
-	if (kkode == 126)
-		view->ospeed += view->ospeed == 360 ? -360 : 1;
-	if (kkode == 125)
-		view->ospeed -= view->ospeed == 0 ? -360 : 1;
-	group_rotate(view->points, view->rp,
-			0.01745 * sign * view->ospeed, axis);
+	button_rotate(key, view);
 	merge_sort(&view->points, view->plen);
 	draw_fdf(view);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
