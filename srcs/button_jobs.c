@@ -6,11 +6,12 @@
 /*   By: abutok <abutok@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/23 14:11:25 by abutok            #+#    #+#             */
-/*   Updated: 2018/02/23 14:59:32 by abutok           ###   ########.fr       */
+/*   Updated: 2018/02/23 15:34:52 by abutok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
 
 void	button_rotate(int key, t_view *view)
 {
