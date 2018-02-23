@@ -94,15 +94,15 @@ void	parse_points(int fd, t_view *view)
 	{
 		rowlen = check_size(&rows, view);
 		get_points(&rows, view);
+		ft_lstdel(&rows, &ft_splitedrowdel);
 		find_neighbours(view->points, rowlen);
 		rowlen = 0;
-		iter = rows;
+		iter = view->points;
 		while (iter)
 		{
 			rowlen++;
 			iter = iter->next;
 		}
-		ft_lstdel(&rows, &ft_splitedrowdel);
 		view->plen = rowlen;
 	}
 }

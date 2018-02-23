@@ -103,5 +103,6 @@ void					check_splited_rows(t_list **rows, t_view *view);
 void					readpoint_check(int r, t_list **rows, t_view *view);
 void					find_neighbours(t_list *points, size_t rowsize);
 int						check_num(char *str);
+void					merge_sort(t_list **list, size_t len);
 
 #endif

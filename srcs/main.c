@@ -22,11 +22,12 @@ t_view	*view_init(int fd)
 	view->mem = NULL;
 	view->x = WIN_WIDTH;
 	view->y = WIN_HEIGHT;
-	view->ospeed = 360;
+	view->ospeed = 2;
 	view->zoom = 1.0;
 	(view->draw_line) = &draw_line;
 	view->points = NULL;
 	parse_points(fd, view);
+	merge_sort(&view->points, view->plen);
 	return (view);
 }
 
@@ -36,8 +37,6 @@ int 	exit_x(t_view *view)
 	mlx_destroy_window(view->mlx, view->win);
 	free(view->mlx);
 	free(view);
-	while (1)
-		sleep(1);
 	exit(1);
 }
 
@@ -80,6 +79,7 @@ int 	button_action(int kkode, t_view *view)
 	group_rotate(points, points[0],
 			0.01745 * sign * view->ospeed, axis);
 	*/
+	merge_sort(&view->points, view->plen);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
 	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("ospeed:", ft_itoa(view->ospeed)));
@@ -91,7 +91,7 @@ int		main(int argc, char **argv)
 	int		map_fd;
 	t_view	*view;
 
-	if (argc < 2)
+	if (argc != 2)
 	{
 		ft_putendl("usage: fdf map_file [args]");
 		return (0);

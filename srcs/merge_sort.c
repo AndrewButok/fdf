@@ -18,7 +18,7 @@ t_list	*merge(t_list *list, size_t len)
 	t_list	*buf;
 
 	r = list;
-	while (len--)
+	while (r->next != NULL && len--)
 		r = r->next;
 	buf = r->next;
 	r->next = NULL;
@@ -41,11 +41,11 @@ t_list	*push(t_list *l, t_list *r)
 	t_list	*start;
 	t_list	*n;
 
+	rv = NULL;
+	start = NULL;
 	while (l != NULL || r != NULL)
 	{
 		n = spush(l, r);
-		l = n == l ? l->next : l;
-		r = n == r ? r->next : r;
 		if (rv == NULL)
 		{
 			rv = n;
@@ -56,6 +56,8 @@ t_list	*push(t_list *l, t_list *r)
 			rv->next = n;
 			rv = rv->next;
 		}
+		l = n == l ? l->next : l;
+		r = n == r ? r->next : r;
 	}
 	rv->next = NULL;
 	return (start);
@@ -68,11 +70,14 @@ void	merge_sort(t_list **list, size_t len)
 	size_t ll;
 	size_t lr;
 
+	if (*list == NULL)
+		return ;
 	l = *list;
-	r = *list;
+	r = NULL;
 	lr = len / 2;
 	ll = len - lr;
-	r = merge(l, ll);
+	if (len > 1)
+		r = merge(l, ll);
 	if (ll > 1)
 		merge_sort(&l, ll);
 	if (lr > 1)
