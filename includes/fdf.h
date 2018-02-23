@@ -82,7 +82,7 @@ void					memregdel(t_mlist **mem_list, void *memtodel);
 void					memclear(t_mlist **mem_list);
 int 					exit_x(t_view *view);
 void					group_rotate(t_list *ps, t_point *p0, double angle, int axis);
-void					zoom(t_point **ps, double x);
+void					zoom(t_point *ps, double x);
 int						linear_gradient(t_point *start, t_point *end,
 		bool f, int i);
 void					draw_line(t_line *line, t_view *view);

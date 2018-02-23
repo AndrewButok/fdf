@@ -64,13 +64,13 @@ void		group_rotate(t_list *ps, t_point *p0, double angle, int axis)
 	}
 }
 
-void		zoom(t_point **ps, double x)
+void		zoom(t_point *ps, double x)
 {
-	while (*ps != NULL)
+	while (ps != NULL)
 	{
-		(*ps)->x *= x;
-		(*ps)->y *= x;
-		(*ps)->z *= x;
+		ps->x *= x;
+		ps->y *= x;
+		ps->z *= x;
 		ps++;
 	}
 }
