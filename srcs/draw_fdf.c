@@ -12,10 +12,21 @@
 
 #include "fdf.h"
 
-void	rm_point(void *point, size_t size)
+void	rm_ptslist(t_list **list, t_view *view)
 {
-	free(point);
-	size = 0;
+	t_list *lst;
+	t_list *buf;
+
+	lst = *list;
+	while (lst)
+	{
+		buf = lst->next;
+		memregdel(&view->mem, lst->content);
+		free(lst->content);
+		memregdel(&view->mem, lst);
+		free(lst);
+		lst = buf;
+	}
 }
 
 void	draw_fdf(t_view *view)
@@ -43,6 +54,8 @@ void	draw_fdf(t_view *view)
 		points = points->next;
 	}
 	//todo list destr
-	ft_lstdel(&view->tpoints,&rm_point);
+	rm_ptslist(&view->tpoints, view);
+	memregdel(&view->mem, view->trp);
 	free(view->trp);
 }
+

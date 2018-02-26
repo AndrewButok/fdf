@@ -47,7 +47,7 @@ void	memregdel(t_mlist **mem_list, void *memtodel)
 	iterator = *mem_list;
 	while (iterator != NULL)
 	{
-		if (iterator->next->content == memtodel)
+		if (iterator->next!= NULL && iterator->next->content == memtodel)
 		{
 			buff = iterator->next->next;
 			ft_memdel((void**)&(iterator->next));
