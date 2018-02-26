@@ -42,6 +42,7 @@ void	draw_fdf(t_view *view)
 		}
 		points = points->next;
 	}
+	//todo list destr
 	ft_lstdel(&view->tpoints,&rm_point);
 	free(view->trp);
 }
