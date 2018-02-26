@@ -62,7 +62,7 @@ void	memclear(t_mlist **mem_list)
 {
 	t_mlist *next;
 
-	if (mem_list != NULL && *mem_list == NULL)
+	if (mem_list != NULL && *mem_list != NULL)
 		while (*mem_list != NULL)
 		{
 			ft_memdel(&((*mem_list)->content));

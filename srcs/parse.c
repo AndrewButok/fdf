@@ -26,6 +26,7 @@ void	get_rows(int fd, t_list **rows, t_view *view)
 
 	while ((gnlr = get_next_line(fd, &str)) > 0)
 	{
+		memreg(&view->mem, str);
 		if (*rows == NULL)
 		{
 			*rows = ft_lstnew(str, ft_strlen(str) + 1);
@@ -37,12 +38,10 @@ void	get_rows(int fd, t_list **rows, t_view *view)
 			memreg(&view->mem, b);
 			ft_lstadd(rows, b);
 		}
-		free(str);
 	}
 	if (gnlr == -1)
 	{
 		perror("Map reading error.");
-		ft_lstdel(rows, &ft_rowdel);
 		exit_x(view);
 	}
 }
@@ -85,24 +84,28 @@ void	parse_points(int fd, t_view *view)
 {
 	t_list *rows;
 	t_list *iter;
-	size_t rowlen;
+	size_t lstlen;
 
 	rows = NULL;
 	get_rows(fd, &rows, view);
 	get_splited_rows(&rows, view);
 	if (rows != NULL)
 	{
-		rowlen = check_size(&rows, view);
+		view->rowlen = check_size(&rows, view);
 		get_points(&rows, view);
-		ft_lstdel(&rows, &ft_splitedrowdel);
-		find_neighbours(view->points, rowlen);
-		rowlen = 0;
+		iter = rows;
+		while (iter)
+		{
+			ft_splitedrowdel(iter->content, iter->content_size);
+			iter = iter->next;
+		}
+		lstlen = 0;
 		iter = view->points;
 		while (iter)
 		{
-			rowlen++;
+			lstlen++;
 			iter = iter->next;
 		}
-		view->plen = rowlen;
+		view->plen = lstlen;
 	}
 }

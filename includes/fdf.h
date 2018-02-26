@@ -32,6 +32,12 @@
 # define AD_KEY 125
 # define G_KEY 5
 # define ESC_KEY 53
+# define PLUS_KEY 24
+# define MINUS_KEY 27
+# define H_KEY 4
+# define K_KEY 40
+# define U_KEY 32
+# define J_KEY 38
 
 typedef union			u_color
 {
@@ -74,7 +80,15 @@ typedef struct			s_view
 	void	*img;
 	char	*scene;
 	t_list	*points;
+	size_t	rowlen;
 	t_point	*rp;
+	t_list	*tpoints;
+	t_point	*trp;
+	int 	gx;
+	int 	gy;
+	int		gz;
+	int 	dx;
+	int 	dy;
 	size_t	plen;
 	t_mlist	*mem;
 	int		bits_per_pixel;
@@ -93,7 +107,7 @@ void					memclear(t_mlist **mem_list);
 int						exit_x(t_view *view);
 void					group_rotate(t_list *ps, t_point *p0,
 	double angle, int axis);
-void					zoom(t_list *ps, double x);
+void					zoom(t_view *view);
 int						linear_gradient(t_point *start, t_point *end,
 		bool f, int i);
 void					draw_line(t_line *line, t_view *view);
@@ -120,5 +134,9 @@ void					select_rp(t_view *view);
 void					draw_fdf(t_view *view);
 void					button_rotate(int key, t_view *view);
 void					rp_check(t_view *view);
+void					clone_points(t_view *view);
+void					move_to_center(t_view *view);
+void					move_pic(int key, t_view *view);
+void					button_zoom(int key, t_view *view);
 
 #endif

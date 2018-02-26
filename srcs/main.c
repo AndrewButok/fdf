@@ -26,8 +26,15 @@ t_view	*view_init(int fd)
 	view->zoom = 1.0;
 	(view->draw_line) = &draw_line;
 	view->points = NULL;
+	view->tpoints = NULL;
+	view->rp = NULL;
+	view->gx = 180;
+	view->gy = 0;
+	view->gz = 0;
+	view->dx = 0;
+	view->dy = 0;
+	view->zoom = 1;
 	parse_points(fd, view);
-	merge_sort(&view->points, view->plen);
 	select_rp(view);
 	return (view);
 }
@@ -38,6 +45,7 @@ int 	exit_x(t_view *view)
 	mlx_destroy_window(view->mlx, view->win);
 	free(view->mlx);
 	free(view);
+	//system("leaks fdf");
 	exit(1);
 }
 
@@ -52,8 +60,13 @@ int 	button_action(int key, t_view *view)
 				&draw_line_antialias : &draw_line;
 	if (key == ESC_KEY)
 		exit_x(view);
+	clone_points(view);
+	find_neighbours(view->tpoints, view->rowlen);
+	button_zoom(key, view);
+	move_to_center(view);
+	move_pic(key, view);
 	button_rotate(key, view);
-	merge_sort(&view->points, view->plen);
+	merge_sort(&view->tpoints, view->plen);
 	draw_fdf(view);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);

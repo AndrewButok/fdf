@@ -12,13 +12,19 @@
 
 #include "fdf.h"
 
+void	rm_point(void *point, size_t size)
+{
+	free(point);
+	size = 0;
+}
+
 void	draw_fdf(t_view *view)
 {
 	t_list	*points;
 	t_point	*cp;
 	t_line	*line;
 
-	points = view->points;
+	points = view->tpoints;
 	while (points != NULL)
 	{
 		cp = (t_point*)points->content;
@@ -36,4 +42,6 @@ void	draw_fdf(t_view *view)
 		}
 		points = points->next;
 	}
+	ft_lstdel(&view->tpoints,&rm_point);
+	free(view->trp);
 }
