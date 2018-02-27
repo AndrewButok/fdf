@@ -23,19 +23,13 @@ void	find_neighbours(t_list *points, size_t rowsize)
 	while (points)
 	{
 		current = points->content;
-		current->right = points->next != NULL && rl != rowsize - 1 ?
+		current->right = (points->next != NULL && rl != rowsize - 1) ?
 				((t_point*)points->next->content) : NULL;
 		l = 0;
 		iter = points;
-		while (l < rowsize && iter)
-		{
+		while (l++ < rowsize && iter != NULL)
 			iter = iter->next;
-			l++;
-		}
-		if (iter != NULL)
-			current->bottom = (t_point*)iter->content;
-		else
-			current->bottom = NULL;
+		current->bottom = (iter == NULL) ? NULL : (t_point*)(iter->content);
 		points = points->next;
 		rl = rl == rowsize - 1 ? 0 : rl + 1;
 	}
@@ -61,7 +55,6 @@ void	select_rp(t_view *view)
 	points = view->points;
 	view->rp = (t_point*)malloc(sizeof(t_point));
 	rp_check(view);
-	memreg(&view->mem, view->rp);
 	view->rp->x = ((t_point*)points->content)->x;
 	view->rp->y = ((t_point*)points->content)->y;
 	view->rp->z = ((t_point*)points->content)->z;

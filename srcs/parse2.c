@@ -24,12 +24,7 @@ size_t	check_size(t_list **rows, t_view *view)
 		if (cv != iter->content_size)
 		{
 			ft_putendl_fd("Error: Wrong map size.", 2);
-			iter = *rows;
-			while (iter)
-			{
-				ft_splitedrowdel(iter->content, iter->content_size);
-				iter = iter->next;
-			}
+			ft_lstdel(rows, &ft_splitedrowdel);
 			exit_x(view);
 		}
 		iter = iter->next;
@@ -72,7 +67,6 @@ int		get_point(char *str, size_t x, size_t z, t_view *view)
 	point = (t_point*)malloc(sizeof(t_point));
 	if (point == NULL)
 		return (0);
-	memreg(&view->mem, point);
 	point->x = (int)x;
 	point->z = (int)z;
 	point->y = ft_atoi(arr[0]);
@@ -81,8 +75,8 @@ int		get_point(char *str, size_t x, size_t z, t_view *view)
 	point->right = NULL;
 	point->bottom = NULL;
 	nls = ft_lstnew(point, sizeof(*point));
-	memreg(&view->mem, nls);
 	ft_lstadd(&(view->points), nls);
+	free(point);
 	return (1);
 }
 
@@ -96,7 +90,6 @@ int		get_point_wc(char *str, size_t x, size_t z, t_view *view)
 	point = (t_point*)malloc(sizeof(t_point));
 	if (point == NULL)
 		return (0);
-	memreg(&view->mem, point);
 	point->x = (int)x;
 	point->z = (int)z;
 	point->y = ft_atoi(str);
@@ -104,8 +97,8 @@ int		get_point_wc(char *str, size_t x, size_t z, t_view *view)
 	point->right = NULL;
 	point->bottom = NULL;
 	nls = ft_lstnew(point, sizeof(*point));
-	memreg(&view->mem, nls);
 	ft_lstadd(&(view->points), nls);
+	free(point);
 	return (1);
 }
 

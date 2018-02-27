@@ -12,12 +12,6 @@
 
 #include "fdf.h"
 
-void	ft_rowdel(void *str, size_t size)
-{
-	free(str);
-	size = 0;
-}
-
 void	get_rows(int fd, t_list **rows, t_view *view)
 {
 	char	*str;
@@ -26,18 +20,14 @@ void	get_rows(int fd, t_list **rows, t_view *view)
 
 	while ((gnlr = get_next_line(fd, &str)) > 0)
 	{
-		memreg(&view->mem, str);
 		if (*rows == NULL)
-		{
 			*rows = ft_lstnew(str, ft_strlen(str) + 1);
-			memreg(&view->mem, *rows);
-		}
 		else
 		{
 			b = ft_lstnew(str, ft_strlen(str) + 1);
-			memreg(&view->mem, b);
 			ft_lstadd(rows, b);
 		}
+		ft_strdel(&str);
 	}
 	if (gnlr == -1)
 	{
@@ -62,13 +52,15 @@ void	get_splited_rows(t_list **rows, t_view *view)
 {
 	size_t	len;
 	char	**splitrow;
+	char 	*str;
 	t_list	*it;
 
 	it = *rows;
 	while (it)
 	{
-		splitrow = ft_strsplit(it->content, ' ');
-		free(it->content);
+		str = (char*)it->content;
+		splitrow = ft_strsplit(str, ' ');
+		ft_strdel(&str);
 		it->content = splitrow;
 		len = 0;
 		if (splitrow != NULL)
@@ -93,12 +85,7 @@ void	parse_points(int fd, t_view *view)
 	{
 		view->rowlen = check_size(&rows, view);
 		get_points(&rows, view);
-		iter = rows;
-		while (iter)
-		{
-			ft_splitedrowdel(iter->content, iter->content_size);
-			iter = iter->next;
-		}
+		ft_lstdel(&rows, &ft_splitedrowdel);
 		lstlen = 0;
 		iter = view->points;
 		while (iter)

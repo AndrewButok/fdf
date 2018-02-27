@@ -12,10 +12,14 @@
 
 #include "fdf.h"
 
-void	line_check(t_view *view)
+void	line_check(t_line **line, t_view *view)
 {
 	if (errno != 0)
 	{
+		free((*line)->start);
+		free((*line)->end);
+		free(*line);
+		*line = NULL;
 		perror("Line creation error occurred");
 		exit_x(view);
 	}
@@ -23,18 +27,10 @@ void	line_check(t_view *view)
 
 void	readpoint_check(int r, t_list **rows, t_view *view)
 {
-	t_list *iter;
-
-	iter = *rows;
 	if (!r)
 	{
 		ft_putendl_fd("Error: Wrong data format.", 2);
-		iter = *rows;
-		while (iter)
-		{
-			ft_splitedrowdel(iter->content, iter->content_size);
-			iter = iter->next;
-		}
+		ft_lstdel(rows, &ft_splitedrowdel);
 		exit_x(view);
 	}
 }
@@ -49,12 +45,7 @@ void	check_splited_rows(t_list **rows, t_view *view)
 		if (it->content == NULL)
 		{
 			ft_putendl_fd("Map row split error.", 2);
-			it = *rows;
-			while (it)
-			{
-				ft_splitedrowdel(it->content, it->content_size);
-				it = it->next;
-			}
+			ft_lstdel(rows, &ft_splitedrowdel);
 			exit_x(view);
 		}
 		it = it->next;

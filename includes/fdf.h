@@ -67,12 +67,6 @@ typedef struct			s_line
 	t_point	*end;
 }						t_line;
 
-typedef struct			s_mlist
-{
-	struct s_mlist	*next;
-	void			*content;
-}						t_mlist;
-
 typedef struct			s_view
 {
 	void	*mlx;
@@ -90,7 +84,6 @@ typedef struct			s_view
 	int 	dx;
 	int 	dy;
 	size_t	plen;
-	t_mlist	*mem;
 	int		bits_per_pixel;
 	int		endian;
 	int		x;
@@ -101,9 +94,6 @@ typedef struct			s_view
 	void	(*draw_line)(t_line*, struct s_view*);
 }						t_view;
 
-void					memreg(t_mlist **mem_list, void *content);
-void					memregdel(t_mlist **mem_list, void *memtodel);
-void					memclear(t_mlist **mem_list);
 int						exit_x(t_view *view);
 void					group_rotate(t_list *ps, t_point *p0,
 	double angle, int axis);
@@ -116,10 +106,8 @@ void					draw_line_antialias(t_line *line,
 void					img_pixel_put(t_view *view,
 		int x, int y, t_color color);
 t_line					*get_line(t_point *start, t_point *end, t_view *view);
-void					free_line(t_line **line, t_view *view);
-t_point					**get_map(int fd, int *width, int *depth);
-bool					is_null(void *link);
-void					line_check(t_view *view);
+void					free_line(t_line **line);
+void					line_check(t_line **line, t_view *view);
 void					parse_points(int fd, t_view *view);
 void					ft_splitedrowdel(void *str, size_t size);
 size_t					check_size(t_list **rows, t_view *view);
@@ -138,5 +126,6 @@ void					clone_points(t_view *view);
 void					move_to_center(t_view *view);
 void					move_pic(int key, t_view *view);
 void					button_zoom(int key, t_view *view);
+void					rm_point(void *content, size_t size);
 
 #endif

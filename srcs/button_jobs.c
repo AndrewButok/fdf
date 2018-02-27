@@ -38,17 +38,12 @@ void	clone_points(t_view *view)
 	t_list	*original;
 	t_list	*clone;
 	t_point	*original_point;
-	t_point	*cloned_point;
 
 	original = view->points;
 	while (original != NULL)
 	{
 		original_point = (t_point*)original->content;
-		cloned_point = (t_point*)malloc(sizeof(t_point));
-		cloned_point = ft_memcpy(cloned_point, original_point, sizeof(t_point));
-		memreg(&view->mem, cloned_point);
-		clone = ft_lstnew(cloned_point, sizeof(t_point));
-		memreg(&view->mem, clone);
+		clone = ft_lstnew(original_point, sizeof(t_point));
 		ft_lstadd(&view->tpoints, clone);
 		original = original->next;
 	}
