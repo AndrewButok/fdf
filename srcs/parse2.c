@@ -24,7 +24,7 @@ size_t	check_size(t_list **rows, t_view *view)
 		if (cv != iter->content_size)
 		{
 			ft_putendl_fd("Error: Wrong map size.", 2);
-			ft_lstdel(rows, &ft_splitedrowdel);
+			ft_lstdelc(rows, &ft_splitedrowdel);
 			exit_x(view);
 		}
 		iter = iter->next;

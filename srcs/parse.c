@@ -29,9 +29,11 @@ void	get_rows(int fd, t_list **rows, t_view *view)
 		}
 		ft_strdel(&str);
 	}
+	ft_strdel(&str);
 	if (gnlr == -1)
 	{
 		perror("Map reading error.");
+		ft_lstdelc(rows, &rm_point);
 		exit_x(view);
 	}
 }
@@ -52,7 +54,7 @@ void	get_splited_rows(t_list **rows, t_view *view)
 {
 	size_t	len;
 	char	**splitrow;
-	char 	*str;
+	char	*str;
 	t_list	*it;
 
 	it = *rows;
@@ -85,7 +87,7 @@ void	parse_points(int fd, t_view *view)
 	{
 		view->rowlen = check_size(&rows, view);
 		get_points(&rows, view);
-		ft_lstdel(&rows, &ft_splitedrowdel);
+		ft_lstdelc(&rows, &ft_splitedrowdel);
 		lstlen = 0;
 		iter = view->points;
 		while (iter)

@@ -12,7 +12,7 @@
 
 NAME = fdf
 #	C compiler run and default error flags
-GCC = gcc -Wall -Wextra -Werror -g
+GCC = gcc -Wall -Wextra -Werror
 #	output flag for GCC compiler with preseted way to CLION project dir
 OUT = -o $(NAME)
 #	MLX flags

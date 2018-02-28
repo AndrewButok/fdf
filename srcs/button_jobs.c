@@ -12,7 +12,6 @@
 
 #include "fdf.h"
 
-
 void	button_rotate(int key, t_view *view)
 {
 	view->gx += key == W_KEY ? view->ospeed : 0;
@@ -44,6 +43,10 @@ void	clone_points(t_view *view)
 	{
 		original_point = (t_point*)original->content;
 		clone = ft_lstnew(original_point, sizeof(t_point));
+		if (clone == NULL)
+		{
+			exit_x(view);
+		}
 		ft_lstadd(&view->tpoints, clone);
 		original = original->next;
 	}
@@ -82,8 +85,8 @@ void	move_pic(int key, t_view *view)
 	view->dy += key == U_KEY ? view->ospeed : 0;
 	view->dy -= key == J_KEY ? view->ospeed : 0;
 	ps = view->tpoints;
-	view->trp->x +=view->dx;
-	view->trp->y +=view->dy;
+	view->trp->x += view->dx;
+	view->trp->y += view->dy;
 	while (ps != NULL)
 	{
 		((t_point*)ps->content)->x += view->dx;

@@ -127,5 +127,7 @@ void					move_to_center(t_view *view);
 void					move_pic(int key, t_view *view);
 void					button_zoom(int key, t_view *view);
 void					rm_point(void *content, size_t size);
+void					check_isempty(t_view *view);
+void					ft_lstdelc(t_list **alst, void (*del)(void *, size_t));
 
 #endif

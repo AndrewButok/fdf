@@ -32,31 +32,25 @@ t_view	*view_init(int fd)
 	view->gz = 0;
 	view->dx = 0;
 	view->dy = 0;
-	view->zoom = 1;
 	parse_points(fd, view);
 	select_rp(view);
+	check_isempty(view);
 	return (view);
 }
 
-int 	exit_x(t_view *view)
+int		exit_x(t_view *view)
 {
-	mlx_clear_window(view->mlx, view->win);
-	mlx_destroy_window(view->mlx, view->win);
-	ft_lstdel(&view->points, &rm_point);
-	free(view->rp);
-	free(view->mlx);
-	free(view);
-	system("leaks fdf");
 	exit(1);
+	view = NULL;
+	return (0);
 }
 
-int 	button_action(int key, t_view *view)
+int		button_action(int key, t_view *view)
 {
 	mlx_clear_window(view->mlx, view->win);
 	view->img = mlx_new_image(view->mlx, WIN_WIDTH, WIN_HEIGHT);
 	view->scene = mlx_get_data_addr(view->img, &view->bits_per_pixel,
 			&view->size_line, &view->endian);
-	
 	if (key == G_KEY)
 		view->draw_line = view->draw_line == &draw_line ?
 				&draw_line_antialias : &draw_line;
@@ -72,7 +66,6 @@ int 	button_action(int key, t_view *view)
 	draw_fdf(view);
 	mlx_put_image_to_window(view->mlx, view->win, view->img, 0, 0);
 	mlx_destroy_image(view->mlx, view->img);
-	//mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, ft_strjoin("rotation speed:", ft_itoa(view->ospeed)));
 	return (1);
 }
 
@@ -94,9 +87,9 @@ int		main(int argc, char **argv)
 		exit(-1);
 	}
 	view = view_init(map_fd);
-	mlx_hook(view->win, 2, 5, &button_action, view);
-	mlx_hook(view->win, 17, 1L<<17, &exit_x, view);
-	mlx_loop(view->mlx);
 	close(map_fd);
+	mlx_hook(view->win, 2, 5, &button_action, view);
+	mlx_hook(view->win, 17, 1L << 17, &exit_x, view);
+	mlx_loop(view->mlx);
 	return (0);
 }

@@ -46,7 +46,7 @@ static char		**ft_warrcheck(char **warr, size_t wc)
 		while (i < wc + 1)
 		{
 			free(warr[i]);
-			warr[i] = NULL;
+			warr[i++] = NULL;
 		}
 		free(warr);
 		warr = NULL;

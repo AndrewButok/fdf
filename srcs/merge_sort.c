@@ -29,7 +29,7 @@ t_list	*merge(t_list *list, size_t len)
 t_list	*spush(t_list *l, t_list *r)
 {
 	if (l != NULL && (r == NULL ||
-			((t_point*)l->content)->z > ((t_point*)r->content)->z))
+			((t_point*)l->content)->z < ((t_point*)r->content)->z))
 		return (l);
 	else
 		return (r);

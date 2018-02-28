@@ -30,7 +30,7 @@ void	readpoint_check(int r, t_list **rows, t_view *view)
 	if (!r)
 	{
 		ft_putendl_fd("Error: Wrong data format.", 2);
-		ft_lstdel(rows, &ft_splitedrowdel);
+		ft_lstdelc(rows, &ft_splitedrowdel);
 		exit_x(view);
 	}
 }
@@ -45,7 +45,7 @@ void	check_splited_rows(t_list **rows, t_view *view)
 		if (it->content == NULL)
 		{
 			ft_putendl_fd("Map row split error.", 2);
-			ft_lstdel(rows, &ft_splitedrowdel);
+			ft_lstdelc(rows, &ft_splitedrowdel);
 			exit_x(view);
 		}
 		it = it->next;
@@ -57,6 +57,15 @@ void	rp_check(t_view *view)
 	if (view->rp == NULL)
 	{
 		ft_putendl_fd("Rotation point malloc error", 2);
+		exit_x(view);
+	}
+}
+
+void	check_isempty(t_view *view)
+{
+	if (view->rp == NULL)
+	{
+		ft_putendl_fd("Map is empty.", 2);
 		exit_x(view);
 	}
 }

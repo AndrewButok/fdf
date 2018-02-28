@@ -18,6 +18,22 @@ void	rm_point(void *content, size_t size)
 	size = 0;
 }
 
+void	ft_lstdelc(t_list **alst, void (*del)(void *, size_t))
+{
+	t_list *list;
+	t_list *next;
+
+	list = *alst;
+	while (list != NULL)
+	{
+		next = list->next;
+		ft_lstdelone(&list, del);
+		list = next;
+	}
+	if (*alst)
+		*alst = NULL;
+}
+
 void	draw_fdf(t_view *view)
 {
 	t_list	*points;
@@ -42,7 +58,6 @@ void	draw_fdf(t_view *view)
 		}
 		points = points->next;
 	}
-	ft_lstdel(&view->tpoints, &rm_point);
+	ft_lstdelc(&view->tpoints, &rm_point);
 	free(view->trp);
 }
-

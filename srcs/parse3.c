@@ -53,6 +53,8 @@ void	select_rp(t_view *view)
 	t_list *points;
 
 	points = view->points;
+	if (points == NULL)
+		return ;
 	view->rp = (t_point*)malloc(sizeof(t_point));
 	rp_check(view);
 	view->rp->x = ((t_point*)points->content)->x;

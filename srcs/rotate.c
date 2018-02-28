@@ -71,9 +71,12 @@ void		zoom(t_view *view)
 	ps = view->tpoints;
 	while (ps != NULL)
 	{
-		((t_point*)ps->content)->x = (int)(((t_point*)ps->content)->x * view->zoom);
-		((t_point*)ps->content)->y = (int)(((t_point*)ps->content)->y * view->zoom);
-		((t_point*)ps->content)->z = (int)(((t_point*)ps->content)->z * view->zoom);
+		((t_point*)ps->content)->x = (int)(((t_point*)ps->content)->x *
+				view->zoom);
+		((t_point*)ps->content)->y = (int)(((t_point*)ps->content)->y *
+				view->zoom);
+		((t_point*)ps->content)->z = (int)(((t_point*)ps->content)->z *
+				view->zoom);
 		ps = ps->next;
 	}
 }
