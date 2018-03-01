@@ -29,8 +29,16 @@ void	print_zoom(t_view *view)
 	char *str;
 	char *d;
 
-	d = ft_dtoa(view->zoom);
-	str = ft_strjoin("Rotation and moving speed:", d);
+	if (view->zoom >= -1)
+	{
+		d = ft_itoa(abs(view->zoom));
+		str = ft_strjoin("Zoom: x ", d);
+	}
+	else
+	{
+		d = ft_itoa(abs(view->zoom));
+		str = ft_strjoin("Zoom: x 1/", d);
+	}
 	ft_strdel(&d);
 	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, str);
 	ft_strdel(&str);

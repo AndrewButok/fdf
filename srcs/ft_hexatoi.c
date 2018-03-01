@@ -46,9 +46,3 @@ int		ft_hexatoi(char *str)
 	}
 	return (val);
 }
-
-char	*ft_dtoa(double d)
-{
-	//todo
-	return (NULL);
-}

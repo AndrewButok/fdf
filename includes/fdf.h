@@ -38,7 +38,7 @@
 # define K_KEY 40
 # define U_KEY 32
 # define J_KEY 38
-# define F1_KEY 0
+# define F1_KEY 122
 
 typedef union			u_color
 {
@@ -91,7 +91,7 @@ typedef struct			s_view
 	int		y;
 	int		size_line;
 	int		ospeed;
-	double	zoom;
+	int		zoom;
 	void	(*draw_line)(t_line*, struct s_view*);
 }						t_view;
 
@@ -131,6 +131,5 @@ void					rm_point(void *content, size_t size);
 void					check_isempty(t_view *view);
 void					ft_lstdelc(t_list **alst, void (*del)(void *, size_t));
 void					print_text(int key, t_view *view);
-char					*ft_dtoa(double d);
 
 #endif

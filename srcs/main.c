@@ -20,7 +20,7 @@ int		button_action(int key, t_view *view)
 									&view->size_line, &view->endian);
 	if (key == G_KEY)
 		view->draw_line = view->draw_line == &draw_line ?
-						  &draw_line_antialias : &draw_line;
+				&draw_line_antialias : &draw_line;
 	if (key == ESC_KEY)
 		exit_x(view);
 	clone_points(view);
@@ -47,7 +47,7 @@ t_view	*view_init(int fd)
 	view->x = WIN_WIDTH;
 	view->y = WIN_HEIGHT;
 	view->ospeed = 2;
-	view->zoom = 1.0;
+	view->zoom = 1;
 	(view->draw_line) = &draw_line;
 	view->points = NULL;
 	view->tpoints = NULL;
@@ -61,7 +61,8 @@ t_view	*view_init(int fd)
 	select_rp(view);
 	check_isempty(view);
 	button_action(-1, view);
-	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff, "Press F1 for help.");
+	mlx_string_put(view->mlx, view->win, 20, 20, 0xffffff,
+			"Press F1 for help.");
 	return (view);
 }
 

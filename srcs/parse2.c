@@ -118,6 +118,8 @@ void	get_points(t_list **rows, t_view *view)
 		x = 0;
 		while (x < iter->content_size)
 		{
+			if (ft_strchr(arr[x], ',') == arr[x])
+				readpoint_check(0, rows, view);
 			r = (ft_strchr(arr[x], ',') == NULL) ?
 					get_point_wc(arr[x], x, z, view) :
 					get_point(arr[x], x, z, view);

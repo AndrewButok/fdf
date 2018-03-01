@@ -57,12 +57,14 @@ void	move_to_center(t_view *view)
 	int		x;
 	int		y;
 	t_list	*it;
+	double	zoom;
 
 	view->trp = (t_point*)malloc(sizeof(t_point));
 	ft_memcpy(view->trp, view->rp, sizeof(t_point));
-	view->trp->x = (int)(view->trp->x * view->zoom);
-	view->trp->y = (int)(view->trp->y * view->zoom);
-	view->trp->z = (int)(view->trp->z * view->zoom);
+	zoom = view->zoom < 0 ? 1.0 / abs(view->zoom) : view->zoom;
+	view->trp->x = (int)(view->trp->x * zoom);
+	view->trp->y = (int)(view->trp->y * zoom);
+	view->trp->z = (int)(view->trp->z * zoom);
 	x = view->x / 2 - view->trp->x;
 	y = view->y / 2 - view->trp->y;
 	view->trp->x += x;
@@ -97,8 +99,16 @@ void	move_pic(int key, t_view *view)
 
 void	button_zoom(int key, t_view *view)
 {
-	view->zoom *= key == PLUS_KEY && view->zoom < 2048 ?
-			2.0 : 1;
-	view->zoom /= key == MINUS_KEY ? 2.0 : 1;
+	if (key == PLUS_KEY && view->zoom == -1)
+		view->zoom = 1;
+	else if (key == MINUS_KEY && view->zoom == 1)
+		view->zoom = -1;
+	else
+	{
+		view->zoom += key == PLUS_KEY && view->zoom < 2048 ?
+				1 : 0;
+		view->zoom -= key == MINUS_KEY && view->zoom > -2048 ?
+				1 : 0;
+	}
 	zoom(view);
 }
