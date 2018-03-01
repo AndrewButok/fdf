@@ -31,9 +31,9 @@ int			linear_gradient(t_point *start, t_point *end, bool ck, int i)
 	d[3] /= (ck ? (end->x - start->x) : (end->y - start->y));
 	d[0] /= (ck ? (end->x - start->x) : (end->y - start->y));
 	color = start->color;
-	color.spectrum.red += (unsigned char)floor(d[1] * i);
-	color.spectrum.green += (unsigned char)floor(d[2] * i);
-	color.spectrum.blue += (unsigned char)floor(d[3] * i);
-	color.spectrum.alpha += (unsigned char)floor(d[0] * i);
+	color.spectrum.red += (unsigned char)round(d[1] * i);
+	color.spectrum.green += (unsigned char)round(d[2] * i);
+	color.spectrum.blue += (unsigned char)round(d[3] * i);
+	color.spectrum.alpha += (unsigned char)round(d[0] * i);
 	return (color.color);
 }

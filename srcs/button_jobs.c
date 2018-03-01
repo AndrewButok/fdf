@@ -97,7 +97,8 @@ void	move_pic(int key, t_view *view)
 
 void	button_zoom(int key, t_view *view)
 {
-	view->zoom *= key == PLUS_KEY ? 2.0 : 1;
+	view->zoom *= key == PLUS_KEY && view->zoom < 2048 ?
+			2.0 : 1;
 	view->zoom /= key == MINUS_KEY ? 2.0 : 1;
 	zoom(view);
 }

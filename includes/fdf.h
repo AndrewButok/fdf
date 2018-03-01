@@ -38,6 +38,7 @@
 # define K_KEY 40
 # define U_KEY 32
 # define J_KEY 38
+# define F1_KEY 0
 
 typedef union			u_color
 {
@@ -129,5 +130,7 @@ void					button_zoom(int key, t_view *view);
 void					rm_point(void *content, size_t size);
 void					check_isempty(t_view *view);
 void					ft_lstdelc(t_list **alst, void (*del)(void *, size_t));
+void					print_text(int key, t_view *view);
+char					*ft_dtoa(double d);
 
 #endif

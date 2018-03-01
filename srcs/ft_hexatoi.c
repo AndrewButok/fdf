@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fdf.h>
+
 int		hex_to_dec(char ch)
 {
 	char	*alph;
@@ -43,4 +45,10 @@ int		ft_hexatoi(char *str)
 		str++;
 	}
 	return (val);
+}
+
+char	*ft_dtoa(double d)
+{
+	//todo
+	return (NULL);
 }

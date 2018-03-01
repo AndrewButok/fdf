@@ -63,7 +63,7 @@ void	rp_check(t_view *view)
 
 void	check_isempty(t_view *view)
 {
-	if (view->rp == NULL)
+	if (view->rp == NULL || view->points->next == NULL)
 	{
 		ft_putendl_fd("Map is empty.", 2);
 		exit_x(view);

@@ -22,7 +22,7 @@ SRCDIR = ./srcs/
 SRCFILES = draw_line.c draw_line_antialias.c linear_gradient.c main.c \
 			line.c check.c rotate.c parse.c \
 			parse2.c ft_hexatoi.c parse3.c merge_sort.c draw_fdf.c \
-			button_jobs.c
+			button_jobs.c help.c
 SRC = $(addprefix $(SRCDIR), $(SRCFILES))
 #	fdf's objects
 OBJDIR = ./objs/
